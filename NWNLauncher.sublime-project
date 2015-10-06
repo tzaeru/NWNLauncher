@@ -1,0 +1,22 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"python",
+				"-u",
+				"main.py"
+			],
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "NWNLauncher",
+			"selector": "source.python"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
+}

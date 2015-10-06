@@ -1,0 +1,728 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"universe",
+				"Universe"
+			],
+			[
+				"defa",
+				"Default"
+			],
+			[
+				"print",
+				"println!	println! …"
+			],
+			[
+				"Compone",
+				"ComponentManager	module"
+			],
+			[
+				"Com",
+				"ComponentPool	class"
+			],
+			[
+				"Comp",
+				"ComponentManager	module"
+			],
+			[
+				"SERI",
+				"SERIALIZE_COMPONENT_NEW	statement"
+			],
+			[
+				"SERIALI",
+				"SERIALIZE_COMPONENT_NEW	statement"
+			],
+			[
+				"COMpon",
+				"ComponentTypes	module"
+			],
+			[
+				"_resolve",
+				"_resolve_movement_phase	function"
+			],
+			[
+				"client",
+				"clientevents	module"
+			],
+			[
+				"amount",
+				"amount_of_tilesets	statement"
+			],
+			[
+				"amount_of",
+				"amount_of_tiles	statement"
+			],
+			[
+				"Cl",
+				"clientevents	module"
+			],
+			[
+				"CLIENT_",
+				"CLIENT_RECEIVED_MAP_SERIALIZATION	statement"
+			],
+			[
+				"SERIA",
+				"SERIALIZE_MAP_FULL	statement"
+			],
+			[
+				"Server",
+				"ServerMessages	class"
+			],
+			[
+				"tileset",
+				"tileset_serialization	statement"
+			],
+			[
+				"Entit",
+				"EntityManager	class"
+			],
+			[
+				"Entity",
+				"EntityManager	module"
+			],
+			[
+				"Enti",
+				"EntityManager	module"
+			],
+			[
+				"dir",
+				"DirectObject	class"
+			],
+			[
+				"mouse_pos",
+				"mouse_position	statement"
+			],
+			[
+				"mouse_",
+				"mouse_position	statement"
+			],
+			[
+				"COmp",
+				"ComponentTypes	class"
+			],
+			[
+				"Component",
+				"ComponentTypes	class"
+			],
+			[
+				"Compon",
+				"ComponentTypes	class"
+			],
+			[
+				"self",
+				"self"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
+				"pn",
+				"PNMImage"
+			],
+			[
+				"sca",
+				"setScale"
+			],
+			[
+				"event",
+				"event"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "COPYING",
+			"settings":
+			{
+				"buffer_size": 486,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "main.py",
+			"settings":
+			{
+				"buffer_size": 11,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "NWNLauncher.sublime-project",
+			"settings":
+			{
+				"buffer_size": 241,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Test"
+				]
+			],
+			[
+				"Packages/Rust/Cargo.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Test"
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/Rust/Rust.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Rust/Rust.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/Rust/Rust.sublime-build",
+				"Run"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"last_filter": "enable pack",
+		"selected_items":
+		[
+			[
+				"enable pack",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable p",
+				"Package Control: Disable Package"
+			],
+			[
+				"disable pack",
+				"Package Control: Disable Package"
+			],
+			[
+				"disable pa",
+				"Package Control: Disable Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable ",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable ",
+				"Package Control: Disable Package"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			],
+			[
+				"list pack",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"upgrade ",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Package Control: disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: remo",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 287.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Jaltsu/Documents/NWNLauncher"
+	],
+	"file_history":
+	[
+		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/UI/Audio/DeviceListUI.cs",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/UnityC#.sublime-settings",
+		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/Audio/Grade.cs",
+		"/C/Users/Jaltsu/Documents/ues2/ues2.sublime-project",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system_worker.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/scifi.sublime-build",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/sector.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/galaxy.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/solar_system.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/Cargo.toml",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity_bin.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/create_universe.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/universe.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component_list.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/create_npcs.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/main.rs",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp18618/home/tzaeru/jotain.txt",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp19754/home/tzaeru/kou.txt",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/denizens/npcai.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/mod.rs",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp14670/home/uplauseadmin/pulsebackend_review/api/controllers/DataProviderController.js",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component.rs",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/planet.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/mod.rs",
+		"/C/projects/scifi/Cargo.toml",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/RustAutoComplete.sublime-settings",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/RustAutoComplete/Preferences.sublime-settings",
+		"/C/projects/scifi/src/universe/tmp2jz8xa",
+		"/C/projects/scifi/src/universe/tmp00xix3",
+		"/C/projects/scifi/src/secs/lens.rs",
+		"/C/projects/scifi/src/secs/system.rs",
+		"/C/projects/scifi/src/secs/mod.rs",
+		"/C/projects/scifi/src/secs/system_worker.rs",
+		"/C/projects/scifi/src/secs/system_manager.rs",
+		"/C/projects/scifi/src/secs/entity_bin.rs",
+		"/C/projects/scifi/src/secs/entity.rs",
+		"/C/projects/scifi/src/secs/component.rs",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/scifi.sublime-build",
+		"/C/projects/scifi/src/universe/sector.rs",
+		"/C/projects/scifi/scifi.sublime-workspace",
+		"/C/projects/scifi/scifi.sublime-project",
+		"/C/projects/scifi/src/SECS/component.rs",
+		"/C/projects/scifi/src/universe/mod.rs",
+		"/C/projects/scifi/src/main.rs",
+		"/C/projects/scifi/src/universe/universe.rs",
+		"/C/projects/scifi/src/universe/galaxy.rs",
+		"/C/projects/scifi/src/universe/sector_bin.rs",
+		"/C/projects/scifi/src/secs/lens",
+		"/C/projects/scifi/src/SECS/mod.rs",
+		"/C/projects/scifi/src/SECS",
+		"/C/projects/scifi/main.rs",
+		"/C/projects/scifi/scifi/src/main.rs",
+		"/C/projects/fields_of_red_sun/src/server/servercommunication.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/tileset.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/map.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/tile.py",
+		"/C/projects/fields_of_red_sun/src/client/clientcommunication.py",
+		"/C/Users/tzaeru/Documents/SPAI/Assets/Scripts/SPAI/README.txt",
+		"/C/projects/rust_stuff/rust.rs",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/projects/fields_of_red_sun/src/client/client.py",
+		"/C/projects/fields_of_red_sun/src/server/server.py",
+		"/C/projects/fields_of_red_sun/src/test_server.py",
+		"/C/projects/fields_of_red_sun/src/test_client.py",
+		"/C/projects/fields_of_red_sun/src/game/creatures/herocomponent.py",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/Anaconda/README.md",
+		"/C/projects/fields_of_red_sun/src/game/servermessages.py",
+		"/C/projects/fields_of_red_sun/src/game/transformcomponent.py",
+		"/C/projects/fields_of_red_sun/src/client/spriterendersystem.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentPool.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityManager.py",
+		"/C/projects/fields_of_red_sun/src/PECS/Entity.py",
+		"/C/projects/fields_of_red_sun/src/client/playerinput.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentTypes.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/spritecomponent.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentSystem.py",
+		"/C/projects/fields_of_red_sun/src/game/clientmessages.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityPool.py",
+		"/C/projects/fields_of_red_sun/src/utils/id_getters.py",
+		"/C/projects/fields_of_red_sun/src/PECS/SystemManager.py",
+		"/C/projects/fields_of_red_sun/src/game/creatures/herosystem.py",
+		"/C/projects/fields_of_red_sun/src/game/system/gameruleset.py",
+		"/C/Panda3D-1.10.0-x64/pandac/PandaModules.py",
+		"/C/projects/fields_of_red_sun/src/server/__init__.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityTypes.py",
+		"/C/projects/fields_of_red_sun/src/game/gameevents.py",
+		"/C/projects/fields_of_red_sun/src/client/battlemap.py",
+		"/C/projects/fields_of_red_sun/src/client/clientevents.py",
+		"/C/projects/fields_of_red_sun/sublime_project/fields_of_red_sun.sublime-project",
+		"/C/projects/fields_of_red_sun/src/PECS/Component.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/echoclient-1.py",
+		"/C/projects/fields_of_red_sun/src/client/communication.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/stdiodemo.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/echoclient.py",
+		"/C/projects/fields_of_red_sun/src/client/battleview.py",
+		"/C/projects/fields_of_red_sun/src/game/positioncomponent.py",
+		"/C/projects/fields_of_red_sun/assets/heroes/hero_sprite_1.json",
+		"/C/projects/fields_of_red_sun/src/client/spriterendersystem",
+		"/C/projects/fields_of_red_sun/assets/heroes/hero_1.json",
+		"/C/projects/fields_of_red_sun/src/game/system/game_component.py",
+		"/C/projects/fields_of_red_sun/src/game/system/game_system.py",
+		"/C/projects/fields_of_red_sun/assets/map_1.json",
+		"/C/projects/fields_of_red_sun/src/client/__init__.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ManagerManager.py",
+		"/C/projects/fields_of_red_sun/src/game/creatures/hero.py",
+		"/C/Users/tzaeru/Documents/projectarmonia/src/utils/id_getters.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentManager.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/simpleclient.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/simpleserv.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/echoserv.py",
+		"/C/projects/fields_of_red_sun/test_client.py",
+		"/C/projects/fields_of_red_sun/src/client/test_client.py",
+		"/C/projects/fields_of_red_sun/sublime_project/script.py",
+		"/C/projects/Armonia2/src/region/World.py",
+		"/C/projects/PipelineTest/RenderPipeline/main.py",
+		"/C/projects/PipelineTest/RenderPipeline/Shader/Includes/Material.include",
+		"/C/projects/cegui_test/wx_test.py",
+		"/C/Panda3D-1.9.0-x64/direct/distributed/MsgTypes.py",
+		"/C/projects/PipelineTest/RenderPipeline/Shader/DefaultObjectShader.vertex",
+		"/C/projects/PipelineTest/RenderPipeline/Shader/DefaultObjectShader.fragment",
+		"/C/projects/PipelineTest/RenderPipeline/classes/RenderingPipeline.py"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"scifi",
+			"movement_target",
+			"print",
+			",\n",
+			"manager",
+			"boost",
+			"1.55",
+			"1.54",
+			"gui",
+			"Panda3dApp",
+			"foreground",
+			"24",
+			");\n",
+			"42",
+			"setSpecular",
+			"createMaterialSliders",
+			"sync",
+			"fps",
+			"world_cons",
+			"world_generat",
+			");\n",
+			"GL_",
+			"windowEvent",
+			"render",
+			"win",
+			"fps",
+			"show",
+			"l_dir1"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "COPYING",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 486,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								486,
+								486
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11,
+								11
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "NWNLauncher.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 241,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								135,
+								135
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 172.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "Packages/scifi.sublime-build",
+	"project": "NWNLauncher.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 200.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
