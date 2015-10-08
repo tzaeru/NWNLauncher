@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"background",
+				"background_label	statement"
+			],
+			[
 				"universe",
 				"Universe"
 			],
@@ -147,7 +151,7 @@
 			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 11,
+				"buffer_size": 1181,
 				"line_ending": "Windows"
 			}
 		},
@@ -155,7 +159,7 @@
 			"file": "NWNLauncher.sublime-project",
 			"settings":
 			{
-				"buffer_size": 241,
+				"buffer_size": 425,
 				"line_ending": "Unix"
 			}
 		}
@@ -349,7 +353,7 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Jaltsu/Documents/NWNLauncher"
+		"/C/Users/tzaeru/Documents/NWNLauncher"
 	],
 	"file_history":
 	[
@@ -582,15 +586,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11,
+						"buffer_size": 1181,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11,
-								11
+								387,
+								387
 							]
 						],
 						"settings":
@@ -610,20 +614,21 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 241,
+						"buffer_size": 425,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								135,
-								135
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -678,7 +683,7 @@
 	{
 		"height": 118.0
 	},
-	"pinned_build_system": "Packages/scifi.sublime-build",
+	"pinned_build_system": "NWNLauncher",
 	"project": "NWNLauncher.sublime-project",
 	"replace":
 	{
