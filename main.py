@@ -10,33 +10,32 @@ def calculate(*args):
     
 root = Tk()
 root.title("Feet to Meters")
+#root.geometry("170x200+30+30") 
+
+ttk.Style().configure("TButton", padding=6, relief="flat",
+   background="#595b59")
 
 mainframe = ttk.Frame(root, padding="0 0 0 0")
-#mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+#mainframe.geometry("170x200+30+30")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 #mainframe.columnconfigure(0, weight=1)
 #mainframe.rowconfigure(0, weight=1)
 
 feet = StringVar()
 meters = StringVar()
 
-feet_entry = ttk.Entry(mainframe, width=7, textvariable=feet)
-feet_entry.grid(column=2, row=1, sticky=(W, E))
+background_image=PhotoImage(file="images/potm_title.png").zoom(x = 1, y = 1)
+background_label = Label(mainframe, image=background_image, borderwidth=0)
+background_label.grid(row=0,column=0, rowspan=6, columnspan=6)
 
-ttk.Label(mainframe, textvariable=meters).grid(column=2, row=2, sticky=(W, E))
-ttk.Button(mainframe, text="Calculate", command=calculate).grid(column=3, row=3, sticky=W)
+progress = ttk.Progressbar(mainframe)
+progress.grid(row=4,column=0)
 
-ttk.Label(mainframe, text="feet").grid(column=3, row=1, sticky=W)
-ttk.Label(mainframe, text="is equivalent to").grid(column=1, row=2, sticky=E)
-ttk.Label(mainframe, text="meters").grid(column=3, row=2, sticky=W)
+stacy = ttk.Button(mainframe, text = 'yoyo')
+stacy.grid(row=5,column=0)
+#stacy.place(x=0, y=0, relwidth=1, relheight=1)
 
-background_image=PhotoImage(file="potm_title.gif")
-background_label = ttk.Label(mainframe, image=background_image)
-background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
-background_label.grid_configure()
+#background_label.grid_configure()
 #for child in mainframe.winfo_children(): child.grid_configure(padx=5, pady=5)
-
-feet_entry.focus()
-root.bind('<Return>', calculate)
 
 root.mainloop()
