@@ -15,7 +15,7 @@ Currently, the only dependency is pytoml (pip install pytoml)
 
 ### Features
 
-* Multi-threaded
+* Smooooooth threaded user experience! Woo, it's 2015!
 * Generic
 * Able to update individual files
 * Multi-platform
