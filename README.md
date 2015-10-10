@@ -11,7 +11,7 @@ It maintains a list of file versions to allow incremental updates per-file.
 
 ### Dependencies
 
-Currently, the only dependency is pytoml (pip install pytoml)
+Currently, the only dependency in addittion to Python 3.4 is pytoml (pip install pytoml)
 
 ### Features
 
