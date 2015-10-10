@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"get",
+				"get_executable_path	function"
+			],
+			[
+				"rel",
+				"relwidth"
+			],
+			[
 				"background",
 				"background_label	statement"
 			],
@@ -140,18 +148,50 @@
 	"buffers":
 	[
 		{
-			"file": "COPYING",
+			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 486,
+				"buffer_size": 1139,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "main.py",
+			"file": "gui.py",
 			"settings":
 			{
-				"buffer_size": 1181,
+				"buffer_size": 1883,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dependency_manager.py",
+			"settings":
+			{
+				"buffer_size": 74,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "path_finder.py",
+			"settings":
+			{
+				"buffer_size": 1295,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "example_file_listing.toml",
+			"settings":
+			{
+				"buffer_size": 97,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 723,
 				"line_ending": "Windows"
 			}
 		},
@@ -357,6 +397,7 @@
 	],
 	"file_history":
 	[
+		"/C/Users/tzaeru/Documents/NWNLauncher/COPYING",
 		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/UI/Audio/DeviceListUI.cs",
 		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/UnityC#.sublime-settings",
 		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/Audio/Grade.cs",
@@ -483,8 +524,7 @@
 		"/C/projects/cegui_test/wx_test.py",
 		"/C/Panda3D-1.9.0-x64/direct/distributed/MsgTypes.py",
 		"/C/projects/PipelineTest/RenderPipeline/Shader/DefaultObjectShader.vertex",
-		"/C/projects/PipelineTest/RenderPipeline/Shader/DefaultObjectShader.fragment",
-		"/C/projects/PipelineTest/RenderPipeline/classes/RenderingPipeline.py"
+		"/C/projects/PipelineTest/RenderPipeline/Shader/DefaultObjectShader.fragment"
 	],
 	"find":
 	{
@@ -554,47 +594,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "COPYING",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 486,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								486,
-								486
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "main.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1181,
+						"buffer_size": 1139,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								387,
-								387
+								135,
+								135
 							]
 						],
 						"settings":
@@ -605,11 +617,154 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gui.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1883,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1412,
+								1412
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python Improved/PythonImproved.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 399.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "dependency_manager.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 74,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								74,
+								74
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python Improved/PythonImproved.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "path_finder.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								270,
+								270
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python Improved/PythonImproved.tmLanguage",
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 741.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "example_file_listing.toml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 97,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								97,
+								97
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 723,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								723,
+								723
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 19.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "NWNLauncher.sublime-project",
 					"semi_transient": false,
 					"settings":
@@ -634,7 +789,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]

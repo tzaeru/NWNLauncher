@@ -1,0 +1,11 @@
+server_ip = "192.100.0.1"
+
+[[files]]
+name = "our_custom.hak"
+version = 1
+download_url = "~files/"
+
+[[files]]
+name = "our_custom.hak"
+version = 1
+download_url = "~files/"
