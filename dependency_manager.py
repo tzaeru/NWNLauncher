@@ -44,6 +44,8 @@ def start_check():
 
     if updates_available == True:
         status = STATUS_UPDATES_AVAILABLE
+    else:
+        status = STATUS_UPDATED
 
 def do_update():
     global status
@@ -52,10 +54,40 @@ def do_update():
     for entry in entries_to_update:
         file_being_downloaded = entry["name"]
         status = STATUS_DOWNLOADING
-        _fetch_entry(entry)
         print("Going to fetch: ", entry["name"])
+        _fetch_entry(entry)
+        _move_entry(entry)
+        _update_entry_to_local_data(entry)
 
     status = STATUS_UPDATED
+
+def _update_entry_to_local_data(entry):
+    local_files_data = _load_local_files_data()
+
+    add_to_end = True
+
+    if "files" in local_files_data:
+        for local_entry in local_files_data["files"]:
+            if local_entry["name"] == entry["name"]:
+                local_entry["version"] = entry["version"]
+                add_to_end = False
+
+    if add_to_end:
+        if "files" not in local_files_data:
+            local_files_data["files"] = []
+        local_files_data["files"].append(entry)
+
+    f = open(path_finder.get_local_data_path(),'w')
+    f.write(toml.dumps(local_files_data))
+    f.flush()
+    f.close()
+
+def _move_entry(entry):
+    target_dir = entry["target_dir"]
+
+    if os.path.isfile(path_finder.get_path() + "/" + target_dir + "/" + entry["name"]):
+        os.remove(path_finder.get_path() + "/" + target_dir + "/" + entry["name"])
+    os.rename("tmp/" + entry["name"], path_finder.get_path() + "/" + target_dir + "/" + entry["name"])
 
 def _fetch_entry(entry):
     url = entry["url"]
@@ -77,9 +109,6 @@ def _fetch_entry(entry):
     f.write(str(data))
     f.close()
 
-    print (path_finder.get_path())
-    os.rename("tmp/" + entry["name"], path_finder.get_path() + "/" + target_dir + "/" + entry["name"])
-
 def _find_version_match(entry_a, entries_b) -> bool:
     for entry_b in entries_b:
         if entry_a["name"] == entry_b["name"]:
@@ -91,7 +120,7 @@ def _find_version_match(entry_a, entries_b) -> bool:
 def _create_dummy_files_data_file():
     f = open(path_finder.get_local_data_path(),'w')
     print("Creating dummy file..")
-    f.write('nwn_server_address = "' + config.nwn_server_address + '"')
+    f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n')
     f.close()
 
 def _load_local_files_data() -> dict:
