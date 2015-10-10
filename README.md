@@ -9,6 +9,17 @@ NWN Launcher is a generic tool for downloading dependencies for Neverwinter Nigh
 
 It maintains a list of file versions to allow incremental updates per-file.
 
+### Dependencies
+
+Currently, the only dependency is pytoml (pip install pytoml)
+
+### Features
+
+* Multi-threaded
+* Generic
+* Able to update individual files
+* Multi-platform
+
 ### License
 
 WTFPL
