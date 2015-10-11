@@ -63,12 +63,15 @@ quit_button = ttk.Button(mainframe, text = "Quit")
 quit_button.grid(row = 7, column = 7)
 quit_button.bind("<Button-1>", _trigger_quit)
 
+update_button = ttk.Button(mainframe, text = "Update")
+update_button.grid(row = 7, column = 0)
+update_button["state"] = "disabled"
+
 def _trigger_update(e):
+    update_button["state"] = "disabled"
     t = Thread(target=dependency_manager.do_update, args=())
     t.start()
 
-update_button = ttk.Button(mainframe, text = "Update")
-update_button.grid(row = 7, column = 0)
 update_button.bind("<Button-1>", _trigger_update)
 
 update_status = StringVar()
@@ -78,6 +81,8 @@ update_status_label.grid(row = 7, column = 1)
 
 def _check_update_status():
     root.after(250, _check_update_status)
+    if dependency_manager.status is dependency_manager.STATUS_UPDATES_AVAILABLE:
+        update_button["state"] = "normal"
 
     if dependency_manager.status is dependency_manager.STATUS_DOWNLOADING:
         update_status.set(dependency_manager.status + dependency_manager.file_being_downloaded)

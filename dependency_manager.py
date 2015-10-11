@@ -84,11 +84,11 @@ def _find_entry_checksum_match(entry):
     if local_entry is None:
         local_entry = _update_checksum_entry(entry)
     print("Checksum entry: ", local_entry)
+    print("Remote entry: ", entry)
 
     # Finally check for a matching checksum
     if local_entry["checksum"] == entry["checksum"]:
         return True
-
     return False
 
 def _update_checksum_entry(entry):
@@ -97,7 +97,7 @@ def _update_checksum_entry(entry):
     file_path = path_finder.get_path() + '/' + entry["target_dir"] + '/' + entry["name"]
 
     print("Doing checksum for: ", entry["name"])
-    checksum = _md5(file_path)
+    checksum = _generate_file_md5(file_path)
 
     print ("Checksum: ", checksum)
 
@@ -125,12 +125,15 @@ def _update_checksum_entry(entry):
 
     return checksum_entry
 
-def _md5(fname):
-    hash = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
-            hash.update(chunk)
-    return hash.hexdigest()
+def _generate_file_md5(path, blocksize=2**20):
+    m = hashlib.md5()
+    with open(path, "rb") as f:
+        while True:
+            buf = f.read(blocksize)
+            if not buf:
+                break
+            m.update( buf )
+    return m.hexdigest()
 
 def _update_entry_to_local_data(entry):
     local_files_data = _load_local_version_data()
@@ -176,8 +179,8 @@ def _fetch_entry(entry):
 
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
-    f = open("tmp/" + entry["name"],'w')
-    f.write(str(data))
+    f = open("tmp/" + entry["name"],'wb')
+    f.write(data)
     f.close()
 
 def _find_version_match(entry_a, entries_b) -> bool:
