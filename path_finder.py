@@ -38,8 +38,11 @@ def get_executable_path() -> str:
     else:
         return get_path() + "/nwmain"
 
-def get_local_data_path() -> str:
-    return get_path() + '/' + config.local_data_file
+def get_local_version_data_path() -> str:
+    return get_path() + '/' + config.local_versions_file
+
+def get_local_checksums_path() -> str:
+    return get_path() + '/' + config.local_checksums_file
 
 def _resolve_path() -> str:
     if platform.system() == "Windows":

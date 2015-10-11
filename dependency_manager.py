@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import urllib, sys, os
+import urllib, sys, os, hashlib
 from urllib.request import urlopen
 import pytoml as toml
 import config
@@ -24,7 +24,7 @@ def start_check():
     global status
 
     remote_files_data = _load_remote_files_data()
-    local_files_data = _load_local_files_data()
+    local_files_data = _load_local_version_data()
 
     updates_available = False
 
@@ -33,7 +33,7 @@ def start_check():
     for remote_file_entry in remote_files_data["files"]:
         do_fetch = True
         if "files" in local_files_data:
-            if _find_version_match(remote_file_entry, local_files_data["files"]):
+            if _find_entry_checksum_match(remote_file_entry):
                 do_fetch = False
 
         if do_fetch == False:
@@ -54,15 +54,86 @@ def do_update():
     for entry in entries_to_update:
         file_being_downloaded = entry["name"]
         status = STATUS_DOWNLOADING
-        print("Going to fetch: ", entry["name"])
+        print("Checking if the following file already exists with corret checksum: ", entry["name"])
         _fetch_entry(entry)
         _move_entry(entry)
         _update_entry_to_local_data(entry)
+        _update_checksum_entry(entry)
 
     status = STATUS_UPDATED
 
+def _find_entry_checksum_match(entry):
+    file_path = path_finder.get_path() + '/' + entry["target_dir"] + '/' + entry["name"]
+
+    # Bail out early if the file doesn't even exist!
+    if os.path.isfile(file_path) != True:
+        return False
+
+    local_checksum_data = _load_local_checksum_data()
+
+    local_entry = None
+
+    # Check if the entry exists in the local checksum data
+    if "files" in local_checksum_data:
+        for file_entry in local_checksum_data["files"]:
+            if file_entry["name"] == entry["name"]:
+                local_entry = file_entry
+                break
+
+    # If local entry doesn't exist, create it now
+    if local_entry is None:
+        local_entry = _update_checksum_entry(entry)
+    print("Checksum entry: ", local_entry)
+
+    # Finally check for a matching checksum
+    if local_entry["checksum"] == entry["checksum"]:
+        return True
+
+    return False
+
+def _update_checksum_entry(entry):
+    local_checksum_data = _load_local_checksum_data()
+
+    file_path = path_finder.get_path() + '/' + entry["target_dir"] + '/' + entry["name"]
+
+    print("Doing checksum for: ", entry["name"])
+    checksum = _md5(file_path)
+
+    print ("Checksum: ", checksum)
+
+    checksum_entry = {}
+    checksum_entry["name"] = entry["name"]
+    checksum_entry["checksum"] = checksum
+
+    existing_entry = None
+    if "files" in local_checksum_data:
+        for local_entry in local_checksum_data["files"]:
+            if local_entry["name"] == checksum_entry["name"]:
+                existing_entry = checksum_entry
+    else:
+        local_checksum_data["files"] = []
+
+    if existing_entry:
+        existing_entry = checksum_entry
+    else:
+        local_checksum_data["files"].append(checksum_entry)
+
+    f = open(path_finder.get_local_checksums_path(),'w')
+    f.write(toml.dumps(local_checksum_data))
+    f.flush()
+    f.close()
+
+    return checksum_entry
+
+def _md5(fname):
+    hash = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash.update(chunk)
+    return hash.hexdigest()
+
 def _update_entry_to_local_data(entry):
-    local_files_data = _load_local_files_data()
+    local_files_data = _load_local_version_data()
 
     add_to_end = True
 
@@ -77,7 +148,7 @@ def _update_entry_to_local_data(entry):
             local_files_data["files"] = []
         local_files_data["files"].append(entry)
 
-    f = open(path_finder.get_local_data_path(),'w')
+    f = open(path_finder.get_local_version_data_path(),'w')
     f.write(toml.dumps(local_files_data))
     f.flush()
     f.close()
@@ -117,18 +188,31 @@ def _find_version_match(entry_a, entries_b) -> bool:
 
     return False
 
-def _create_dummy_files_data_file():
-    f = open(path_finder.get_local_data_path(),'w')
-    print("Creating dummy file..")
+def _create_dummy_checksum_data_file():
+    f = open(path_finder.get_local_checksums_path(),'w')
+    print("Creating dummy checksum data file..")
+    f.close()
+
+def _create_dummy_version_data_file():
+    f = open(path_finder.get_local_version_data_path(),'w')
+    print("Creating dummy version data file..")
     f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n')
     f.close()
 
-def _load_local_files_data() -> dict:
-    if os.path.isfile(path_finder.get_local_data_path()) != True:
-        _create_dummy_files_data_file()
+def _load_local_checksum_data() -> dict:
+    if os.path.isfile(path_finder.get_local_checksums_path()) != True:
+        _create_dummy_checksum_data_file()
 
-    with open(path_finder.get_local_data_path()) as local_data_file:
-        data_as_dict = toml.load(local_data_file)
+    with open(path_finder.get_local_checksums_path()) as local_checksums_file:
+        data_as_dict = toml.load(local_checksums_file)
+        return data_as_dict
+
+def _load_local_version_data() -> dict:
+    if os.path.isfile(path_finder.get_local_version_data_path()) != True:
+        _create_dummy_version_data_file()
+
+    with open(path_finder.get_local_version_data_path()) as local_version_data_file:
+        data_as_dict = toml.load(local_version_data_file)
         return data_as_dict
 
 def _load_remote_files_data() -> dict:

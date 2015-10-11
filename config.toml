@@ -1,3 +1,4 @@
-local_data_file = "potm_launcher_data.toml"
+local_versions_file = "potm_launcher_data.toml"
+local_checksums_file = "checksums.toml"
 remote_data_file = "http://tzaeru.com:2020/files_slim.toml"
 nwn_server_address = "104.155.20.124:5121"
