@@ -56,6 +56,15 @@ def _create_label(text_v) -> Label:
 
     return label
 
+def _do_check_update(e = None):
+    dependency_manager.download_music = bool(music_var.get())
+    dependency_manager.download_portraits = bool(portraits_var.get())
+    dependency_manager.download_overrides = bool(overrides_var.get())
+
+    if path_finder.get_path() is not path_finder.NO_PATH:
+        t = Thread(target=dependency_manager.start_check, args=())
+        t.start()
+
 root = Tk()
 root.title("NWN Launcher - Prisoners of The Mist")
 root.resizable(0,0)
@@ -95,10 +104,6 @@ def _trigger_path_dialogue(e):
     nwn_path.set(path)
     path_finder.set_path(path)
 
-    if path_finder.get_path() is not path_finder.NO_PATH:
-        t = Thread(target=dependency_manager.start_check, args=())
-        t.start()
-
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
 def _trigger_quit(e):
@@ -116,19 +121,19 @@ _image_to_disabled(update_button)
 music_var = IntVar()
 music_var.set(1)
 music_checkbox = Checkbutton(mainframe, text="Music", variable=music_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0)
+    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 music_checkbox.place(in_=mainframe, anchor="w", relx=.03, rely=.975)
 
 overrides_var = IntVar()
 overrides_var.set(1)
 overrides_checkbox = Checkbutton(mainframe, text="Overrides", variable=overrides_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0)
+    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 overrides_checkbox.place(in_=mainframe, anchor="w", relx=.15, rely=.975)
 
 portraits_var = IntVar()
 portraits_var.set(1)
 portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0)
+    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe, anchor="w", relx=.27, rely=.975)
 
 def _trigger_update(e):
@@ -137,6 +142,10 @@ def _trigger_update(e):
     t.start()
 
 update_button.bind("<Button-1>", _trigger_update)
+
+#music_checkbox.bind("<Button-1>", _do_check_update)
+#overrides_checkbox.bind("<Button-1>", _do_check_update)
+#portraits_checkbox.bind("<Button-1>", _do_check_update)
 
 update_status = StringVar()
 update_status.set(dependency_manager.status + "\nHi" + "\nHello")

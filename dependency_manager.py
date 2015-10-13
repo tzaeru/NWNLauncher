@@ -5,9 +5,12 @@ from urllib.request import urlopen
 import pytoml as toml
 import config
 import path_finder
+from threading import Thread
+import queue
 
 STATUS_CHECKING = "Checking for updates..."
 STATUS_NO_CONNECTION = "Failed to connect to file server."
+STATUS_DOWNLOADED = "All files downloaded,\nprogressing hanging ones..."
 STATUS_UPDATED = "Files are up to date."
 STATUS_UPDATES_AVAILABLE = "Updates are available!"
 STATUS_DOWNLOADING = "Downloading file: "
@@ -22,25 +25,45 @@ total_size_of_updates = 0
 
 do_quit = False
 
-entries_to_update = []
+download_music = True
+download_portraits = True
+download_overrides = True
+
+entries_to_download = []
+entries_to_process = queue.Queue()
 
 def start_check():
-    global entries_to_update
+    global entries_to_download
     global status
     global total_size_of_updates
     global total_amount_of_updates
 
+    status = STATUS_CHECKING
+
     remote_files_data = _load_remote_files_data()
     local_files_data = _load_local_version_data()
 
+    total_size_of_updates = 0
+    total_amount_of_updates = 0
+
     updates_available = False
 
-    entries_to_update = []
+    entries_to_download = []
+
+    local_checksum_data = _load_local_checksum_data()
 
     for remote_file_entry in remote_files_data["files"]:
         do_fetch = True
+
+        if remote_file_entry["target_dir"] == "music" and download_music == False:
+            continue
+        if remote_file_entry["target_dir"] == "portraits" and download_portraits == False:
+            continue
+        if remote_file_entry["target_dir"] == "override" and download_overrides == False:
+            continue
+
         if "files" in local_files_data:
-            if _find_entry_checksum_match(remote_file_entry):
+            if _find_entry_checksum_match(remote_file_entry, local_checksum_data):
                 do_fetch = False
 
         if do_fetch == False:
@@ -51,7 +74,7 @@ def start_check():
 
         total_amount_of_updates += 1
 
-        entries_to_update.append(remote_file_entry)
+        entries_to_download.append(remote_file_entry)
         updates_available = True
 
     if updates_available == True:
@@ -62,22 +85,54 @@ def start_check():
 def do_update():
     global status
     global file_being_downloaded
+    global entries_to_process
 
-    for entry in entries_to_update:
+    status = STATUS_DOWNLOADING
+    processing_thread = Thread(target=_downloaded_file_handler_thread, args=())
+    processing_thread.start()
+
+    for entry in entries_to_download:
         file_being_downloaded = entry["name"]
-        status = STATUS_DOWNLOADING
-        print("Checking if the following file already exists with corret checksum: ", entry["name"])
         _fetch_entry(entry)
-        _validate_target_dir(entry)
-
+        entries_to_process.put(entry)
         if do_quit is True:
             break
 
-        _move_entry(entry)
-        _update_entry_to_local_data(entry)
-        _update_checksum_entry(entry)
-
+    status = STATUS_DOWNLOADED
+    queue_status = entries_to_process.join()
     status = STATUS_UPDATED
+
+def _downloaded_file_handler_thread():
+    global entries_to_process
+    do_terminate = False
+    entry = None
+
+    local_checksum_data = _load_local_checksum_data()
+    local_files_data = _load_local_version_data()
+
+    while True:
+        if status == STATUS_DOWNLOADED and entries_to_process.empty() or do_quit == True:
+            do_terminate = True
+        elif entries_to_process.empty():
+            continue
+
+        try:
+            entry = entries_to_process.get(timeout=1)
+        except queue.Empty:
+            print("Queue for files to process is empty.")
+            break
+
+        _validate_target_dir(entry)
+        _move_entry(entry)
+        _update_entry_to_local_data(entry, local_files_data)
+        _update_checksum_entry(entry, local_checksum_data)
+
+        entries_to_process.task_done()
+
+        if do_terminate == True:
+            break
+
+    return 1
 
 def _validate_target_dir(entry):
     target_dir = os.path.join(path_finder.get_path(), entry["target_dir"])
@@ -85,15 +140,16 @@ def _validate_target_dir(entry):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
-def _find_entry_checksum_match(entry) -> bool:
+def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
     file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     # Bail out early if the file doesn't even exist!
     if os.path.isfile(file_path) != True:
         return False
-
-    local_checksum_data = _load_local_checksum_data()
+    # But if the file exists and is a portrait, return right away without checksum generation
+    if entry["target_dir"] == "portraits":
+        return True
 
     local_entry = None
 
@@ -106,7 +162,7 @@ def _find_entry_checksum_match(entry) -> bool:
 
     # If local entry doesn't exist, create it now
     if local_entry is None:
-        local_entry = _update_checksum_entry(entry)
+        local_entry = _update_checksum_entry(entry, local_checksum_data)
     print("Checksum entry: ", local_entry)
     print("Remote entry: ", entry)
 
@@ -115,14 +171,16 @@ def _find_entry_checksum_match(entry) -> bool:
         return True
     return False
 
-def _update_checksum_entry(entry):
-    local_checksum_data = _load_local_checksum_data()
-
+def _update_checksum_entry(entry, local_checksum_data):
+    
     file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     print("Doing checksum for: ", entry["name"])
-    checksum = _generate_file_md5(file_path)
+    # Skip generating a checksum for portraits, since there's so bloody many of them!
+    checksum = "portrait"
+    if entry["target_dir"] != "portraits":
+        checksum = _generate_file_md5(file_path)
 
     print ("Checksum: ", checksum)
 
@@ -159,8 +217,7 @@ def _generate_file_md5(path, blocksize=2**20):
             m.update( buf )
     return m.hexdigest()
 
-def _update_entry_to_local_data(entry):
-    local_files_data = _load_local_version_data()
+def _update_entry_to_local_data(entry, local_files_data):
 
     add_to_end = True
 
@@ -224,12 +281,13 @@ def _find_version_match(entry_a, entries_b) -> bool:
 def _create_dummy_checksum_data_file():
     f = open(path_finder.get_local_checksums_path(),'w')
     print("Creating dummy checksum data file..")
+    f.write('[[files]]\n')
     f.close()
 
 def _create_dummy_version_data_file():
     f = open(path_finder.get_local_version_data_path(),'w')
     print("Creating dummy version data file..")
-    f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n')
+    f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n[[files]]')
     f.close()
 
 def _load_local_checksum_data() -> dict:
