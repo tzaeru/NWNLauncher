@@ -69,6 +69,10 @@ def do_update():
         print("Checking if the following file already exists with corret checksum: ", entry["name"])
         _fetch_entry(entry)
         _validate_target_dir(entry)
+
+        if do_quit is True:
+            break
+
         _move_entry(entry)
         _update_entry_to_local_data(entry)
         _update_checksum_entry(entry)
@@ -126,17 +130,16 @@ def _update_checksum_entry(entry):
     checksum_entry["name"] = entry["name"]
     checksum_entry["checksum"] = checksum
 
-    existing_entry = None
+    found_entry = False
     if "files" in local_checksum_data:
         for local_entry in local_checksum_data["files"]:
             if local_entry["name"] == checksum_entry["name"]:
-                existing_entry = checksum_entry
+                found_entry = True
+                local_entry["checksum"] = checksum_entry["checksum"]
     else:
         local_checksum_data["files"] = []
 
-    if existing_entry:
-        existing_entry = checksum_entry
-    else:
+    if found_entry == False:
         local_checksum_data["files"].append(checksum_entry)
 
     f = open(path_finder.get_local_checksums_path(),'w')
