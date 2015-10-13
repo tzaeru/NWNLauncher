@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import urllib, sys, os, hashlib
+import urllib, sys, os, hashlib, shutil
 from urllib.request import urlopen
 import pytoml as toml
 import config
@@ -17,11 +17,18 @@ file_being_downloaded = None
 current_file_progress = 0.0
 total_progress = 0.0
 
+total_amount_of_updates = 0
+total_size_of_updates = 0
+
+do_quit = False
+
 entries_to_update = []
 
 def start_check():
     global entries_to_update
     global status
+    global total_size_of_updates
+    global total_amount_of_updates
 
     remote_files_data = _load_remote_files_data()
     local_files_data = _load_local_version_data()
@@ -38,6 +45,11 @@ def start_check():
 
         if do_fetch == False:
             continue
+
+        if "size" in remote_file_entry:
+            total_size_of_updates += float(remote_file_entry["size"])
+
+        total_amount_of_updates += 1
 
         entries_to_update.append(remote_file_entry)
         updates_available = True
@@ -56,14 +68,22 @@ def do_update():
         status = STATUS_DOWNLOADING
         print("Checking if the following file already exists with corret checksum: ", entry["name"])
         _fetch_entry(entry)
+        _validate_target_dir(entry)
         _move_entry(entry)
         _update_entry_to_local_data(entry)
         _update_checksum_entry(entry)
 
     status = STATUS_UPDATED
 
-def _find_entry_checksum_match(entry):
-    file_path = path_finder.get_path() + '/' + entry["target_dir"] + '/' + entry["name"]
+def _validate_target_dir(entry):
+    target_dir = os.path.join(path_finder.get_path(), entry["target_dir"])
+
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+
+def _find_entry_checksum_match(entry) -> bool:
+    file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
+    file_path = os.path.join(file_path, entry["name"])
 
     # Bail out early if the file doesn't even exist!
     if os.path.isfile(file_path) != True:
@@ -94,7 +114,8 @@ def _find_entry_checksum_match(entry):
 def _update_checksum_entry(entry):
     local_checksum_data = _load_local_checksum_data()
 
-    file_path = path_finder.get_path() + '/' + entry["target_dir"] + '/' + entry["name"]
+    file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
+    file_path = os.path.join(file_path, entry["name"])
 
     print("Doing checksum for: ", entry["name"])
     checksum = _generate_file_md5(file_path)
@@ -159,9 +180,15 @@ def _update_entry_to_local_data(entry):
 def _move_entry(entry):
     target_dir = entry["target_dir"]
 
-    if os.path.isfile(path_finder.get_path() + "/" + target_dir + "/" + entry["name"]):
-        os.remove(path_finder.get_path() + "/" + target_dir + "/" + entry["name"])
-    os.rename("tmp/" + entry["name"], path_finder.get_path() + "/" + target_dir + "/" + entry["name"])
+    src_path = os.path.join("tmp", entry["name"])
+
+    dst_path = os.path.join(path_finder.get_path(), target_dir)
+    dst_path = os.path.join(dst_path, entry["name"])
+
+    if os.path.isfile(dst_path):
+        os.remove(dst_path)
+
+    shutil.move(src_path,dst_path)
 
 def _fetch_entry(entry):
     url = entry["url"]
@@ -174,13 +201,13 @@ def _fetch_entry(entry):
     print (url)
     print (target_dir)
 
-    response = urlopen(url)
-    read_bytes, data = _chunk_read(response)
-
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
     f = open("tmp/" + entry["name"],'wb')
-    f.write(data)
+
+    response = urlopen(url)
+    read_bytes = _chunk_read(response, f, report_hook=_chunk_report)
+
     f.close()
 
 def _find_version_match(entry_a, entries_b) -> bool:
@@ -220,22 +247,17 @@ def _load_local_version_data() -> dict:
 
 def _load_remote_files_data() -> dict:
     response = urlopen(config.remote_data_file)
-    read_bytes, data = _chunk_read(response)
+    data = response.read()
     data_as_dict = toml.loads(data)
 
     return data_as_dict
 
 def _chunk_report(bytes_so_far, chunk_size, total_size):
-    percent = float(bytes_so_far) / total_size
-    percent = round(percent*100, 2)
-    print("HI")
-    print("Downloaded %d of %d bytes (%0.2f%%)\r" % 
-        (bytes_so_far, total_size, percent))
+    global current_file_progress
 
-    if bytes_so_far >= total_size:
-       sys.stdout.write('\n')
+    current_file_progress = float(bytes_so_far) / total_size
 
-def _chunk_read(response, chunk_size=131072, report_hook=None):
+def _chunk_read(response, file_to_write_to, chunk_size=2**20, report_hook=None):
     print(response.info())
     total_size = response.info().get('Content-Length')
     if (total_size):
@@ -244,23 +266,22 @@ def _chunk_read(response, chunk_size=131072, report_hook=None):
     else:
         total_size = 1
     bytes_so_far = 0
-
-    data = None
  
-    while 1:
+    global total_progress
+
+    while 1 and do_quit is False:
        chunk = response.read(chunk_size)
 
-       if bytes_so_far > 0:
-          data += chunk
-       else:
-          data = chunk
+       file_to_write_to.write(chunk)
 
        bytes_so_far += len(chunk)
+       
+       total_progress += float(len(chunk)) / total_size_of_updates
 
        if not chunk:
           break
 
        if report_hook:
           report_hook(bytes_so_far, chunk_size, total_size)
-
-    return (bytes_so_far, data)
+    
+    return bytes_so_far
