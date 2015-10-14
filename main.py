@@ -6,8 +6,8 @@ import config
 import dependency_manager
 
 
-config.load_config("config.toml")
-path = path_finder.get_path()
+config.load_config("config/config.toml")
+path = path_finder.get_nwn_path()
 
 if path is not path_finder.NO_PATH:
     t = Thread(target=dependency_manager.start_check, args=())

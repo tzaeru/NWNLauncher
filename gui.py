@@ -14,6 +14,8 @@ import dependency_manager
 
 from threading import Thread
 
+import config
+
 gui_update_cycles = 0
 
 def _image_to_selected(event):
@@ -61,7 +63,7 @@ def _do_check_update(e = None):
     dependency_manager.download_portraits = bool(portraits_var.get())
     dependency_manager.download_overrides = bool(overrides_var.get())
 
-    if path_finder.get_path() is not path_finder.NO_PATH:
+    if path_finder.get_nwn_path() is not path_finder.NO_PATH:
         t = Thread(target=dependency_manager.start_check, args=())
         t.start()
 
@@ -70,10 +72,10 @@ root.title("NWN Launcher - Prisoners of The Mist")
 root.resizable(0,0)
 
 # Load the images we'll use
-background_image=PhotoImage(file="images/potm_title.png")
-button_active_image=PhotoImage(file="images/button_active.png")
-button_disabled_image=PhotoImage(file="images/button_disabled.png")
-button_hovered_image=PhotoImage(file="images/button_hovered.png")
+background_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "potm_title.png"))
+button_active_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_active.png"))
+button_disabled_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_disabled.png"))
+button_hovered_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_hovered.png"))
 
 ttk.Style().configure("TEntry", padding=6, relief="flat",
    background="#595b59")
@@ -89,20 +91,20 @@ launch_button.place(in_=mainframe, anchor="c", relx=.5, rely=.6)
 #launch_button.grid(row=6, column=0)
 
 def _trigger_launch(e):
-    os.chdir(path_finder.get_path())
+    os.chdir(path_finder.get_nwn_path())
     subprocess.call(path_finder.get_executable_path() + " +connect 104.155.20.124:5121")
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
 nwn_path = StringVar()
-nwn_path.set(path_finder.get_path())
+nwn_path.set(path_finder.get_nwn_path())
 nwn_path_label = _create_label(nwn_path)
 nwn_path_label.place(in_=mainframe, anchor="c", relx=.5, rely=.7)
 
 def _trigger_path_dialogue(e):
     path = askdirectory(title="Select NWN installation directory")
     nwn_path.set(path)
-    path_finder.set_path(path)
+    path_finder.set_nwn_path(path)
 
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
@@ -136,6 +138,11 @@ portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe, anchor="w", relx=.27, rely=.975)
 
+server_var = StringVar()
+server_combobox = ttk.Combobox(mainframe, textvariable=server_var)
+server_combobox["values"] = ("Test1", "Test2")
+server_combobox.place(in_=mainframe, anchor="w", relx=.6, rely=.975)
+    
 def _trigger_update(e):
     _image_to_disabled(update_button)
     t = Thread(target=dependency_manager.do_update, args=())

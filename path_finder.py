@@ -25,7 +25,7 @@ keys_for_windows = [
     r"SOFTWARE\BioWare\NWN\Neverwinter",
 ]
 
-def get_path() -> str:
+def get_nwn_path() -> str:
     global cached_path
 
     if cached_path == NO_PATH:
@@ -33,24 +33,30 @@ def get_path() -> str:
 
     return cached_path
 
-def set_path(path : str):
+def set_nwn_path(path : str):
     if _verify_path(path) is False:
         return
 
     global cached_path
     cached_path = path
 
+def get_server_config_path() -> str:
+    return os.path.join("./config", config.current_server)
+
+def get_server_images_path() -> str:
+    return os.path.join("./config", config.current_server, "images")
+
 def get_executable_path() -> str:
     if platform.system() == "Windows":
-        return os.path.join(get_path(), "nwmain.exe")
+        return os.path.join(get_nwn_path(), "nwmain.exe")
     else:
-        return os.path.join(get_path(), "nwmain")
+        return os.path.join(get_nwn_path(), "nwmain")
 
 def get_local_version_data_path() -> str:
-    return os.path.join(get_path(), config.local_versions_file)
+    return os.path.join(get_server_config_path(), config.local_versions_file)
 
 def get_local_checksums_path() -> str:
-    return os.path.join(get_path(), config.local_checksums_file)
+    return os.path.join("./config", config.local_checksums_file)
 
 def _resolve_path() -> str:
     if platform.system() == "Windows":

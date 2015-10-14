@@ -49,10 +49,12 @@ def start_check():
     updates_available = False
 
     entries_to_download = []
-
     local_checksum_data = _load_local_checksum_data()
 
-    for remote_file_entry in remote_files_data["files"]:
+    for file_name, remote_file_entry in remote_files_data.items():
+        if isinstance(remote_file_entry, str):
+            continue
+
         do_fetch = True
 
         if remote_file_entry["target_dir"] == "music" and download_music == False:
@@ -62,9 +64,8 @@ def start_check():
         if remote_file_entry["target_dir"] == "override" and download_overrides == False:
             continue
 
-        if "files" in local_files_data:
-            if _find_entry_checksum_match(remote_file_entry, local_checksum_data):
-                do_fetch = False
+        if _find_entry_checksum_match(remote_file_entry, local_checksum_data):
+            do_fetch = False
 
         if do_fetch == False:
             continue
@@ -135,13 +136,13 @@ def _downloaded_file_handler_thread():
     return 1
 
 def _validate_target_dir(entry):
-    target_dir = os.path.join(path_finder.get_path(), entry["target_dir"])
+    target_dir = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
 def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
-    file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
+    file_path = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     # Bail out early if the file doesn't even exist!
@@ -154,17 +155,12 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
     local_entry = None
 
     # Check if the entry exists in the local checksum data
-    if "files" in local_checksum_data:
-        for file_entry in local_checksum_data["files"]:
-            if file_entry["name"] == entry["name"]:
-                local_entry = file_entry
-                break
+    if entry["name"] in local_checksum_data:
+        local_entry = local_checksum_data[entry["name"]]
 
     # If local entry doesn't exist, create it now
     if local_entry is None:
         local_entry = _update_checksum_entry(entry, local_checksum_data)
-    print("Checksum entry: ", local_entry)
-    print("Remote entry: ", entry)
 
     # Finally check for a matching checksum
     if local_entry["checksum"] == entry["checksum"]:
@@ -173,7 +169,7 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
 
 def _update_checksum_entry(entry, local_checksum_data):
     
-    file_path = os.path.join(path_finder.get_path(), entry["target_dir"])
+    file_path = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     print("Doing checksum for: ", entry["name"])
@@ -189,16 +185,12 @@ def _update_checksum_entry(entry, local_checksum_data):
     checksum_entry["checksum"] = checksum
 
     found_entry = False
-    if "files" in local_checksum_data:
-        for local_entry in local_checksum_data["files"]:
-            if local_entry["name"] == checksum_entry["name"]:
-                found_entry = True
-                local_entry["checksum"] = checksum_entry["checksum"]
-    else:
-        local_checksum_data["files"] = []
+    if checksum_entry["name"] in local_checksum_data:
+        found_entry = True
+        local_checksum_data[checksum_entry["name"]]["checksum"] = checksum_entry["checksum"]
 
     if found_entry == False:
-        local_checksum_data["files"].append(checksum_entry)
+        local_checksum_data[checksum_entry["name"]] = checksum_entry
 
     f = open(path_finder.get_local_checksums_path(),'w')
     f.write(toml.dumps(local_checksum_data))
@@ -221,16 +213,13 @@ def _update_entry_to_local_data(entry, local_files_data):
 
     add_to_end = True
 
-    if "files" in local_files_data:
-        for local_entry in local_files_data["files"]:
-            if local_entry["name"] == entry["name"]:
-                local_entry["version"] = entry["version"]
-                add_to_end = False
+    if entry["name"] in local_files_data.items():
+        local_files_data["version"] = entry["version"]
+        local_files_data["checksum"] = entry["checksum"]
+        add_to_end = False
 
     if add_to_end:
-        if "files" not in local_files_data:
-            local_files_data["files"] = []
-        local_files_data["files"].append(entry)
+        local_files_data[entry["name"]] = entry
 
     f = open(path_finder.get_local_version_data_path(),'w')
     f.write(toml.dumps(local_files_data))
@@ -242,7 +231,7 @@ def _move_entry(entry):
 
     src_path = os.path.join("tmp", entry["name"])
 
-    dst_path = os.path.join(path_finder.get_path(), target_dir)
+    dst_path = os.path.join(path_finder.get_nwn_path(), target_dir)
     dst_path = os.path.join(dst_path, entry["name"])
 
     if os.path.isfile(dst_path):
@@ -271,23 +260,22 @@ def _fetch_entry(entry):
     f.close()
 
 def _find_version_match(entry_a, entries_b) -> bool:
-    for entry_b in entries_b:
-        if entry_a["name"] == entry_b["name"]:
-            if entry_a["version"] == entry_b["version"]:
-                return True
+    if entry_a["name"] in entries_b.items():
+        if entry_a["version"] == entries_b[entry_a["name"]]["version"]:
+            return True
 
     return False
 
 def _create_dummy_checksum_data_file():
     f = open(path_finder.get_local_checksums_path(),'w')
     print("Creating dummy checksum data file..")
-    f.write('[[files]]\n')
+    f.write('[files]\n')
     f.close()
 
 def _create_dummy_version_data_file():
     f = open(path_finder.get_local_version_data_path(),'w')
     print("Creating dummy version data file..")
-    f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n[[files]]')
+    f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n[files]')
     f.close()
 
 def _load_local_checksum_data() -> dict:
