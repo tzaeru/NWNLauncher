@@ -15,6 +15,7 @@ import dependency_manager
 from threading import Thread
 
 import config
+from PIL import Image, ImageTk
 
 gui_update_cycles = 0
 
@@ -36,10 +37,10 @@ def _image_to_enabled(widget):
     widget["image"] = button_active_image
     widget["foreground"] = "#ffe0e0"
 
-def _create_label_button(text) -> Label:
+def _create_label_button(text) -> Button:
     label = Label(mainframe, text = text, compound="center",
         image=button_active_image, borderwidth = 0,
-        relief = "flat", padx=0, pady=0,
+        relief = "flat",  padx=0, pady=0, background="#030200",
         font="TkHeadingFont 15 bold", foreground="#ffe0e0")
 
     label.enabled = True
@@ -72,10 +73,29 @@ root.title("NWN Launcher - Prisoners of The Mist")
 root.resizable(0,0)
 
 # Load the images we'll use
-background_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "potm_title.png"))
-button_active_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_active.png"))
-button_disabled_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_disabled.png"))
-button_hovered_image=PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_hovered.png"))
+background_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "background.png"))
+button_active_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_active.png"))
+button_disabled_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_disabled.png"))
+button_hovered_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_hovered.png"))
+
+def _load_images():
+    global background_image
+    background_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "background.png"))
+    global button_active_image
+    button_active_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_active.png"))
+    global button_disabled_image
+    button_disabled_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_disabled.png"))
+    global button_hovered_image
+    button_hovered_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "button_hovered.png"))
+    background_label["image"] = background_image
+
+    if update_button.enabled:
+        _image_to_enabled(update_button)
+    else:
+        _image_to_disabled(update_button)
+
+    _image_to_enabled(launch_button)
+    _image_to_enabled(quit_button)
 
 ttk.Style().configure("TEntry", padding=6, relief="flat",
    background="#595b59")
@@ -83,7 +103,7 @@ ttk.Style().configure("TEntry", padding=6, relief="flat",
 mainframe = ttk.Frame(root, padding="0 0 0 0")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
-background_label = Label(mainframe, image=background_image, borderwidth=0)
+background_label = Label(mainframe, image=background_image, borderwidth=0, background="#000000")
 background_label.grid(row=0,column=0, rowspan=8, columnspan=8)
 
 launch_button = _create_label_button("Launch")
@@ -138,11 +158,26 @@ portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe, anchor="w", relx=.27, rely=.975)
 
+def _change_server_conf(*args):
+    for key, value in config.confs.items():
+        if value["name_full"] == server_var.get():
+            config.setup_config_for(value["name_short"])
+            break
+
+    _do_check_update()
+    _load_images()
+
 server_var = StringVar()
-server_combobox = ttk.Combobox(mainframe, textvariable=server_var)
-server_combobox["values"] = ("Test1", "Test2")
-server_combobox.place(in_=mainframe, anchor="w", relx=.6, rely=.975)
-    
+server_combobox = ttk.Combobox(mainframe, textvariable=server_var, width=29)
+servers = []
+for key, value in config.confs.items():
+    servers.append(value["name_full"])
+server_combobox["values"] = servers
+server_var.set(config.current_server_full_name)
+server_combobox.state(['readonly'])
+server_combobox.place(in_=mainframe, anchor="nw", relx=.0, rely=.0)
+server_var.trace("w", _change_server_conf)
+
 def _trigger_update(e):
     _image_to_disabled(update_button)
     t = Thread(target=dependency_manager.do_update, args=())

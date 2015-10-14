@@ -6,7 +6,7 @@ import config
 import dependency_manager
 
 
-config.load_config("config/config.toml")
+config.load_config("config")
 path = path_finder.get_nwn_path()
 
 if path is not path_finder.NO_PATH:
