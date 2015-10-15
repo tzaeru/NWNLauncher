@@ -17,6 +17,8 @@ from threading import Thread
 import config
 from PIL import Image, ImageTk
 
+import webbrowser
+
 gui_update_cycles = 0
 
 def _image_to_selected(event):
@@ -64,9 +66,23 @@ def _do_check_update(e = None):
     dependency_manager.download_portraits = bool(portraits_var.get())
     dependency_manager.download_overrides = bool(overrides_var.get())
 
+    config.serialize_to_main_conf(["download_music", "download_portraits", "download_overrides"],
+        [music_var.get(), portraits_var.get(), overrides_var.get()])
+
     if path_finder.get_nwn_path() is not path_finder.NO_PATH:
         t = Thread(target=dependency_manager.start_check, args=())
         t.start()
+
+def _dm_checkbox_clicked(e = None):
+    if dm_var.get():
+        dm_pass_label.place(in_=mainframe, anchor="e", relx=0.57, rely=.975)
+        dm_pass_entry.place(in_=mainframe, anchor="w", relx=0.57, rely=.975)
+    else:
+        dm_pass_label.place_forget()
+        dm_pass_entry.place_forget()
+
+    config.serialize_to_main_conf(["login_as_dm"],
+        [dm_var.get()])
 
 root = Tk()
 root.title("NWN Launcher - Prisoners of The Mist")
@@ -111,8 +127,11 @@ launch_button.place(in_=mainframe, anchor="c", relx=.5, rely=.6)
 #launch_button.grid(row=6, column=0)
 
 def _trigger_launch(e):
-    os.chdir(path_finder.get_nwn_path())
-    subprocess.call(path_finder.get_executable_path() + " +connect 104.155.20.124:5121")
+    if dm_var.get():
+        subprocess.call(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
+            " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())
+    else:
+        subprocess.call(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
@@ -141,22 +160,38 @@ update_button.grid(row = 7, column = 0)
 _image_to_disabled(update_button)
 
 music_var = IntVar()
-music_var.set(1)
+music_var.set(config.main_conf_values["download_music"])
 music_checkbox = Checkbutton(mainframe, text="Music", variable=music_var, foreground="#ffe0e0",
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 music_checkbox.place(in_=mainframe, anchor="w", relx=.03, rely=.975)
 
 overrides_var = IntVar()
-overrides_var.set(1)
+overrides_var.set(config.main_conf_values["download_overrides"])
 overrides_checkbox = Checkbutton(mainframe, text="Overrides", variable=overrides_var, foreground="#ffe0e0",
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 overrides_checkbox.place(in_=mainframe, anchor="w", relx=.15, rely=.975)
 
 portraits_var = IntVar()
-portraits_var.set(1)
+portraits_var.set(config.main_conf_values["download_portraits"])
 portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits_var, foreground="#ffe0e0",
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe, anchor="w", relx=.27, rely=.975)
+
+# DM Checkbox
+dm_var = IntVar()
+dm_var.set(config.main_conf_values["login_as_dm"])
+dm_checkbox = Checkbutton(mainframe, text="Connect as DM", variable=dm_var, foreground="#ffe0e0",
+    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_dm_checkbox_clicked)
+dm_checkbox.place(in_=mainframe, anchor="e", relx=0.96, rely=.975)
+
+dm_pass_label = Label(text = "Password: ", borderwidth = 3, width=0,
+        padx=2, pady=2,
+        font="TkTextFond 8 bold", foreground="#efeeee",
+        background="#393b39")
+
+dm_pass_var = StringVar()
+dm_pass_entry = Entry(mainframe, show='*', textvariable=dm_pass_var)
+_dm_checkbox_clicked()
 
 def _change_server_conf(*args):
     for key, value in config.confs.items():
@@ -235,6 +270,57 @@ _check_update_status()
 
 def on_closing():
     _trigger_quit(None)
+
+LARGE_FONT= ("Verdana", 12)
+NORM_FONT = ("Helvetica", 10)
+SMALL_FONT = ("Helvetica", 8)
+
+URL_FONT = ("Helvetica", 10, "underline")
+
+def _gog_popupmsg():
+    top = Toplevel()
+    top.title("GoG CD key detected")
+
+    msg = ttk.Label(top, text="You seem to be using the default CD key provided by Good old Games.\n\n" + 
+        "Due to the potential for abuse, many servers have banned this CD key.\n", font=NORM_FONT)
+    msg.pack()
+
+    def open_gog(e):
+        webbrowser.open("http://www.gog.com/support/neverwinter_nights_diamond_edition/online_play_in_neverwinter_nights_diamond")
+
+    link = ttk.Label(top, text="Visit GoG for a fix!\n", foreground="blue", font=URL_FONT)
+    link.bind("<Button-1>", open_gog)
+    link.pack()
+
+    dont_show_again_var = IntVar()
+    dont_show_again_var.set(0)
+
+    def serialize_gog_warning():
+        config.serialize_to_main_conf(["show_gog_warning"], [dont_show_again_var.get() != True])
+
+    dont_show_again_checkbox = Checkbutton(top, text="Don't show again", variable=dont_show_again_var,
+        command=serialize_gog_warning)
+    dont_show_again_checkbox.pack()
+
+    button = ttk.Button(top, text="Dismiss", command=top.destroy)
+    button.pack()
+
+def _check_for_gog_cd_key():
+    with open(path_finder.get_cdkey_path()) as cdkey:
+        cd_keys = cdkey.read()
+        cd_keys = cd_keys.replace(" ", "")
+        key1_index = cd_keys.find("Key1")
+        key1_index = cd_keys.find("=", key1_index) + 1
+        key1 = cd_keys[key1_index:cd_keys.find("\n", key1_index)]
+        key1 = key1.replace("-", "")
+        public_key1 = ""
+        for i in range(0,8):
+            public_key1 += key1[1 + i*2]
+        if public_key1 == "Q7RREKF3":
+            _gog_popupmsg()
+
+if config.main_conf_values["show_gog_warning"]:
+    root.after(50, _check_for_gog_cd_key)
 
 root.wm_protocol("WM_DELETE_WINDOW", on_closing)
 

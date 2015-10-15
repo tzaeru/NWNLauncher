@@ -58,6 +58,12 @@ def get_local_version_data_path() -> str:
 def get_local_checksums_path() -> str:
     return os.path.join("./config", config.local_checksums_file)
 
+def get_cdkey_path() -> str:
+    return os.path.join(get_nwn_path(), "nwncdkey.ini") 
+
+def get_windows_hosts_path() -> str:
+    return os.path.join("C:/Windows/System32/drivers/etc", "hosts") 
+
 def _resolve_path() -> str:
     if platform.system() == "Windows":
         return _resolve_path_win32()
