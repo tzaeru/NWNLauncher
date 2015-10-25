@@ -13,10 +13,18 @@ DefaultDirName={pf}\NWN Launcher
 DisableProgramGroupPage=yes
 UninstallDisplayIcon={app}\NWN Launcher.exe
 OutputBaseFilename="NWN Launcher Installer"
+ChangesAssociations=yes
 
 [Files]
-Source: "build/*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "build/*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "ICO/*"; DestDir: "{app}";
 
 [Icons]
 Name: "{commonprograms}\NWN Launcher"; Filename: "{app}\NWN Launcher.exe"
 Name: "{commondesktop}\NWN Launcher"; Filename: "{app}\NWN Launcher.exe"
+
+[Registry]
+Root: HKCR; Subkey: ".nwnl"; ValueType: string; ValueName: ""; ValueData: "NWNLauncherServerFile"; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "NWNLauncherServerFile"; ValueType: string; ValueName: ""; ValueData: "NWN Launcher Server File"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "NWNLauncherServerFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\NWN Launcher.exe,0"
+Root: HKCR; Subkey: "NWNLauncherServerFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\NWN Launcher.exe"" ""%1"""

@@ -1,6 +1,7 @@
 download_music = 1
+login_as_dm = 0
 download_portraits = 1
 download_overrides = 1
-show_gog_warning = true
 default_server = "potm"
-login_as_dm = 0
+allow_overwrite = 1
+show_gog_warning = true

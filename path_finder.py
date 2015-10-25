@@ -52,11 +52,14 @@ def get_executable_path() -> str:
     else:
         return os.path.join(get_nwn_path(), "nwmain")
 
+def get_config_path() -> str:
+    return "./config";
+
 def get_local_version_data_path() -> str:
-    return os.path.join(get_server_config_path(), config.local_versions_file)
+    return os.path.join("./config", "file_info", config.local_versions_file)
 
 def get_local_checksums_path() -> str:
-    return os.path.join("./config", config.local_checksums_file)
+    return os.path.join("./config", "file_info", config.local_checksums_file)
 
 def get_cdkey_path() -> str:
     return os.path.join(get_nwn_path(), "nwncdkey.ini") 

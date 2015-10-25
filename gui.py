@@ -39,11 +39,11 @@ def _image_to_enabled(widget):
     widget["image"] = button_active_image
     widget["foreground"] = "#ffe0e0"
 
-def _create_label_button(text) -> Button:
+def _create_label_button(text, font="TkHeadingFont 15 bold") -> Button:
     label = Label(mainframe, text = text, compound="center",
         image=button_active_image, borderwidth = 0,
         relief = "flat",  padx=0, pady=0, background="#030200",
-        font="TkHeadingFont 15 bold", foreground="#ffe0e0")
+        font=font, foreground="#ffe0e0")
 
     label.enabled = True
 
@@ -65,9 +65,10 @@ def _do_check_update(e = None):
     dependency_manager.download_music = bool(music_var.get())
     dependency_manager.download_portraits = bool(portraits_var.get())
     dependency_manager.download_overrides = bool(overrides_var.get())
+    dependency_manager.allow_overwrite = bool(overrides_var.get())
 
-    config.serialize_to_main_conf(["download_music", "download_portraits", "download_overrides"],
-        [music_var.get(), portraits_var.get(), overrides_var.get()])
+    config.serialize_to_main_conf(["download_music", "download_portraits", "download_overrides", "allow_overwrite"],
+        [music_var.get(), portraits_var.get(), overrides_var.get(), overwrite_var.get()])
 
     if path_finder.get_nwn_path() is not path_finder.NO_PATH:
         t = Thread(target=dependency_manager.start_check, args=())
@@ -75,8 +76,8 @@ def _do_check_update(e = None):
 
 def _dm_checkbox_clicked(e = None):
     if dm_var.get():
-        dm_pass_label.place(in_=mainframe, anchor="e", relx=0.57, rely=.975)
-        dm_pass_entry.place(in_=mainframe, anchor="w", relx=0.57, rely=.975)
+        dm_pass_label.place(in_=mainframe, anchor="e", relx=0.355, rely=.68)
+        dm_pass_entry.place(in_=mainframe, anchor="w", relx=0.355, rely=.68)
     else:
         dm_pass_label.place_forget()
         dm_pass_entry.place_forget()
@@ -84,9 +85,14 @@ def _dm_checkbox_clicked(e = None):
     config.serialize_to_main_conf(["login_as_dm"],
         [dm_var.get()])
 
+def _trigger_delete_overrides(e = None):
+    dependency_manager.delete_overrides()
+
 root = Tk()
 root.title("NWN Launcher - Prisoners of The Mist")
 root.resizable(0,0)
+
+root.iconbitmap(r'ICO/nwn_composite_RA8_icon.ico')
 
 # Load the images we'll use
 background_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "background.png"))
@@ -123,22 +129,22 @@ background_label = Label(mainframe, image=background_image, borderwidth=0, backg
 background_label.grid(row=0,column=0, rowspan=8, columnspan=8)
 
 launch_button = _create_label_button("Launch")
-launch_button.place(in_=mainframe, anchor="c", relx=.5, rely=.6)
+launch_button.place(in_=mainframe, anchor="w", relx=.01, rely=.6)
 #launch_button.grid(row=6, column=0)
 
 def _trigger_launch(e):
     if dm_var.get():
-        subprocess.call(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
+        subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
             " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())
     else:
-        subprocess.call(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
+        subprocess.Popen(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
 nwn_path = StringVar()
 nwn_path.set(path_finder.get_nwn_path())
 nwn_path_label = _create_label(nwn_path)
-nwn_path_label.place(in_=mainframe, anchor="c", relx=.5, rely=.7)
+nwn_path_label.place(in_=mainframe, anchor="e", relx=.99, rely=.6)
 
 def _trigger_path_dialogue(e):
     path = askdirectory(title="Select NWN installation directory")
@@ -147,16 +153,8 @@ def _trigger_path_dialogue(e):
 
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
-def _trigger_quit(e):
-    dependency_manager.do_quit = True
-    root.quit()
-
-quit_button = _create_label_button("Quit")
-quit_button.grid(row = 7, column = 7)
-quit_button.bind("<Button-1>", _trigger_quit)
-
 update_button = _create_label_button("Update")
-update_button.grid(row = 7, column = 0)
+update_button.place(in_=mainframe, anchor="w", relx=.01, rely=.76)
 _image_to_disabled(update_button)
 
 music_var = IntVar()
@@ -177,12 +175,18 @@ portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe, anchor="w", relx=.27, rely=.975)
 
+overwrite_var = IntVar()
+overwrite_var.set(config.main_conf_values["allow_overwrite"])
+overwrite_checkbox = Checkbutton(mainframe, text="Allow overwriting dependencies", variable=overwrite_var, foreground="#ffe0e0",
+    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
+overwrite_checkbox.place(in_=mainframe, anchor="w", relx=.39, rely=.975)
+
 # DM Checkbox
 dm_var = IntVar()
 dm_var.set(config.main_conf_values["login_as_dm"])
 dm_checkbox = Checkbutton(mainframe, text="Connect as DM", variable=dm_var, foreground="#ffe0e0",
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_dm_checkbox_clicked)
-dm_checkbox.place(in_=mainframe, anchor="e", relx=0.96, rely=.975)
+dm_checkbox.place(in_=mainframe, anchor="w", relx=0.01, rely=.68)
 
 dm_pass_label = Label(text = "Password: ", borderwidth = 3, width=0,
         padx=2, pady=2,
@@ -232,9 +236,16 @@ update_status_label = Label(mainframe, textvariable=update_status,
     relief = SUNKEN, padx=2, pady=2,
     font="TkTextFond 10 bold", foreground="#efeeee",
     background="#393b39")
-update_status_label.place(in_=mainframe, anchor="nw", relx=.25, rely=.80)
+update_status_label.place(in_=mainframe, anchor="nw", relx=.232, rely=.71)
+
+delete_overrides_button = _create_label_button("Delete overrides..", font="TkHeadingFont 10")
+delete_overrides_button.place(in_=mainframe, anchor="se", relx=.99, rely=.99)
+delete_overrides_button.bind("<Button-1>", _trigger_delete_overrides)
 
 def _check_update_status():
+    if dependency_manager.do_quit == True:
+        return
+
     global gui_update_cycles
 
     root.after(250, _check_update_status)
@@ -269,7 +280,9 @@ def _check_update_status():
 _check_update_status()
 
 def on_closing():
-    _trigger_quit(None)
+    print("Quitting..")
+    dependency_manager.do_quit = True
+    root.quit()
 
 LARGE_FONT= ("Verdana", 12)
 NORM_FONT = ("Helvetica", 10)

@@ -21,8 +21,10 @@ setup(  name = "guifoo",
         version = "0.1",
         description = "My GUI application!",
         options = {"build_exe": build_exe_options},
-        executables = [Executable("main.py", base=base, targetName="NWN Launcher.exe")])
-
-os.remove("build/config/file_checksums.toml")
+        executables = [Executable("main.py", base=base, targetName="NWN Launcher.exe", icon="ICO/nwn_composite_RA8_icon.ico")])
 
 subprocess.call('mt -manifest windows_manifest.xml -outputresource:"build/NWN Launcher.exe"')
+
+os.remove("build/tk/images")
+os.remove("build/tk/demos")
+os.remove("build/tcl/tzdata")

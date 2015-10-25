@@ -6,7 +6,8 @@
 			[
 				"python",
 				"-u",
-				"main.py"
+				"main.py",
+				"test.test"
 			],
 			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"name": "NWNLauncher",

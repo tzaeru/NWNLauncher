@@ -36,7 +36,7 @@ def setup_config_for(server_name):
     remote_data_file = server_config["remote_data_file"]
 
     global local_versions_file
-    local_versions_file = "file_versions.toml"
+    local_versions_file = current_server + "_file_versions.toml"
 
     global local_checksums_file
     local_checksums_file = "file_checksums.toml"
@@ -70,8 +70,11 @@ def _load_configs(path) -> dict:
 
     for item in os.listdir(path):
         if os.path.isdir(os.path.join(path, item)):
-            with open(os.path.join(path, item, "config.toml")) as conffile:
-                config = toml.load(conffile)
-                confs[config["name_short"]] = config
+            try:
+                with open(os.path.join(path, item, "config.toml")) as conffile:
+                    config = toml.load(conffile)
+                    confs[config["name_short"]] = config
+            except IOError:
+                continue
 
     return confs

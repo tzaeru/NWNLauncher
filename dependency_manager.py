@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import urllib, sys, os, hashlib, shutil
+import urllib, sys, os, hashlib, shutil, time, tarfile
 from urllib.request import urlopen
 import pytoml as toml
 import config
@@ -24,10 +24,6 @@ total_amount_of_updates = 0
 total_size_of_updates = 0
 
 do_quit = False
-
-download_music = True
-download_portraits = True
-download_overrides = True
 
 entries_to_download = []
 entries_to_process = queue.Queue()
@@ -54,14 +50,16 @@ def start_check():
     for file_name, remote_file_entry in remote_files_data.items():
         if isinstance(remote_file_entry, str):
             continue
+        if do_quit is True:
+            return
 
         do_fetch = True
 
-        if remote_file_entry["target_dir"] == "music" and download_music == False:
+        if remote_file_entry["target_dir"] == "music" and config.main_conf_values["download_music"] == False:
             continue
-        if remote_file_entry["target_dir"] == "portraits" and download_portraits == False:
+        if remote_file_entry["target_dir"] == "portraits" and config.main_conf_values["download_portraits"] == False:
             continue
-        if remote_file_entry["target_dir"] == "override" and download_overrides == False:
+        if remote_file_entry["target_dir"] == "override" and config.main_conf_values["download_overrides"] == False:
             continue
 
         if _find_entry_checksum_match(remote_file_entry, local_checksum_data):
@@ -102,6 +100,19 @@ def do_update():
     status = STATUS_DOWNLOADED
     queue_status = entries_to_process.join()
     status = STATUS_UPDATED
+
+def delete_overrides():
+    remote_files_data = _load_remote_files_data()
+
+    for file_name, remote_file_entry in remote_files_data.items():
+        if isinstance(remote_file_entry, str):
+            continue
+
+        if remote_file_entry["target_dir"] == "override":
+            try:
+                os.remove(os.path.join(path_finder.get_nwn_path(), "override", file_name))
+            except:
+                print("Couldn't find for removal: ", os.path.join(path_finder.get_nwn_path(), "override", file_name))
 
 def _downloaded_file_handler_thread():
     global entries_to_process
@@ -148,7 +159,12 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
     # Bail out early if the file doesn't even exist!
     if os.path.isfile(file_path) != True:
         return False
-    # But if the file exists and is a portrait, return right away without checksum generation
+
+    # Now it should be safe to bail out if overwriting isn't allowed..
+    if config.main_conf_values["allow_overwrite"] == 0:
+        return True
+
+    # And if the file exists and is a portrait, return right away without checksum checking
     if entry["target_dir"] == "portraits":
         return True
 
@@ -158,13 +174,19 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
     if entry["name"] in local_checksum_data:
         local_entry = local_checksum_data[entry["name"]]
 
+    modified_at = time.ctime(os.path.getmtime(file_path))
+
     # If local entry doesn't exist, create it now
     if local_entry is None:
+        local_entry = _update_checksum_entry(entry, local_checksum_data)
+    # If time of modification mismatches, recreate the entry.
+    elif local_entry["modified"] != modified_at:
         local_entry = _update_checksum_entry(entry, local_checksum_data)
 
     # Finally check for a matching checksum
     if local_entry["checksum"] == entry["checksum"]:
         return True
+
     return False
 
 def _update_checksum_entry(entry, local_checksum_data):
@@ -177,12 +199,18 @@ def _update_checksum_entry(entry, local_checksum_data):
     checksum = "portrait"
     if entry["target_dir"] != "portraits":
         checksum = _generate_file_md5(file_path)
+    else:
+        return
 
     print ("Checksum: ", checksum)
+
+    modified_at = time.ctime(os.path.getmtime(file_path))
+    print ("Modified at: ", modified_at)
 
     checksum_entry = {}
     checksum_entry["name"] = entry["name"]
     checksum_entry["checksum"] = checksum
+    checksum_entry["modified"] = modified_at
 
     found_entry = False
     if checksum_entry["name"] in local_checksum_data:
@@ -229,30 +257,38 @@ def _update_entry_to_local_data(entry, local_files_data):
 def _move_entry(entry):
     target_dir = entry["target_dir"]
 
-    src_path = os.path.join("tmp", entry["name"])
+    src_path = os.path.join("tmp", entry["src_file"])
 
     dst_path = os.path.join(path_finder.get_nwn_path(), target_dir)
-    dst_path = os.path.join(dst_path, entry["name"])
+    dst_path = os.path.join(dst_path, entry["target_file"])
 
-    if os.path.isfile(dst_path):
-        os.remove(dst_path)
+    filename, file_extension = os.path.splitext(src_path)
 
-    shutil.move(src_path,dst_path)
+    # If not .gz file, move directly
+    if file_extension != ".gz":
+        if os.path.isfile(dst_path):
+            os.remove(dst_path)
+
+        shutil.move(src_path,dst_path)
+    # Assume it's gzipped tarball
+    else:
+        print("Unballing ", src_path, "...")
+        tar = tarfile.open(src_path)
+        tar.extractall(os.path.join(path_finder.get_nwn_path(), target_dir))
+        tar.close()
+        os.remove(src_path)
 
 def _fetch_entry(entry):
     url = entry["url"]
-
-    target_dir = entry["target_dir"]
 
     if url[0] == '~':
         url = config.remote_data_file[:config.remote_data_file.rfind('/')+1] + url[1:]
 
     print (url)
-    print (target_dir)
 
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
-    f = open("tmp/" + entry["name"],'wb')
+    f = open("tmp/" + entry["src_file"],'wb')
 
     response = urlopen(url)
     read_bytes = _chunk_read(response, f, report_hook=_chunk_report)
