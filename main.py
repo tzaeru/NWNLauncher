@@ -30,7 +30,7 @@ path = path_finder.get_nwn_path()
 
 
 if path is not path_finder.NO_PATH:
-    t = Thread(target=dependency_manager.start_check, args=())
+    t = Thread(target=dependency_manager.start_check, args=([True]))
     t.start()
 
 # Add hosts entry to skip NWN authentication.

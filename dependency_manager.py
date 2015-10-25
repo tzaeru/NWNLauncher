@@ -28,7 +28,9 @@ do_quit = False
 entries_to_download = []
 entries_to_process = queue.Queue()
 
-def start_check():
+cached_remote_data = None
+
+def start_check(get_new_remote_data = False):
     global entries_to_download
     global status
     global total_size_of_updates
@@ -36,7 +38,8 @@ def start_check():
 
     status = STATUS_CHECKING
 
-    remote_files_data = _load_remote_files_data()
+
+    remote_files_data = _load_remote_files_data(get_new_remote_data)
     local_files_data = _load_local_version_data()
 
     total_size_of_updates = 0
@@ -330,12 +333,18 @@ def _load_local_version_data() -> dict:
         data_as_dict = toml.load(local_version_data_file)
         return data_as_dict
 
-def _load_remote_files_data() -> dict:
-    response = urlopen(config.remote_data_file)
-    data = response.read()
-    data_as_dict = toml.loads(data)
+def _load_remote_files_data(get_new_remote_data = False) -> dict:
+    if get_new_remote_data:
+        response = urlopen(config.remote_data_file)
+        data = response.read()
+        data_as_dict = toml.loads(data)
 
-    return data_as_dict
+        global cached_remote_data
+        cached_remote_data = data_as_dict
+
+        return data_as_dict
+    else:
+        return cached_remote_data
 
 def _chunk_report(bytes_so_far, chunk_size, total_size):
     global current_file_progress

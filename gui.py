@@ -20,6 +20,7 @@ from PIL import Image, ImageTk
 import webbrowser
 
 gui_update_cycles = 0
+update_check_queued = False
 
 def _image_to_selected(event):
     if event.widget.enabled == True:
@@ -70,9 +71,9 @@ def _do_check_update(e = None):
     config.serialize_to_main_conf(["download_music", "download_portraits", "download_overrides", "allow_overwrite"],
         [music_var.get(), portraits_var.get(), overrides_var.get(), overwrite_var.get()])
 
-    if path_finder.get_nwn_path() is not path_finder.NO_PATH:
-        t = Thread(target=dependency_manager.start_check, args=())
-        t.start()
+    global update_check_queued
+    update_check_queued = True
+    _check_update_status(False)
 
 def _dm_checkbox_clicked(e = None):
     if dm_var.get():
@@ -242,13 +243,14 @@ delete_overrides_button = _create_label_button("Delete overrides..", font="TkHea
 delete_overrides_button.place(in_=mainframe, anchor="se", relx=.99, rely=.99)
 delete_overrides_button.bind("<Button-1>", _trigger_delete_overrides)
 
-def _check_update_status():
+def _check_update_status(repeat = True):
     if dependency_manager.do_quit == True:
         return
 
     global gui_update_cycles
 
-    root.after(250, _check_update_status)
+    if repeat:
+        root.after(250, _check_update_status)
     if dependency_manager.status is dependency_manager.STATUS_DOWNLOADING:
         current_progress = dependency_manager.current_file_progress
         current_progress_str = '{0:0.1f}'.format(current_progress*100.0)
@@ -275,6 +277,16 @@ def _check_update_status():
         update_status.set(update_text)
         _image_to_enabled(update_button)
 
+    global update_check_queued
+
+    if (update_check_queued and
+        dependency_manager.status is not dependency_manager.STATUS_DOWNLOADING and
+        dependency_manager.status is not dependency_manager.STATUS_CHECKING):
+        if path_finder.get_nwn_path() is not path_finder.NO_PATH:
+            t = Thread(target=dependency_manager.start_check, args=())
+            t.start()
+
+        update_check_queued = False
     gui_update_cycles += 1
 
 _check_update_status()
