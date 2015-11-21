@@ -58,3 +58,9 @@ target/
 
 # Windows stuff
 *.db
+NWN Launcher Standalone/
+font/
+config/file_info/file_checksums.toml
+config/file_info/potm_file_versions.toml
+build.rar
+PNG/

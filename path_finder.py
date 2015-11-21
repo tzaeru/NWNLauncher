@@ -62,7 +62,10 @@ def get_local_checksums_path() -> str:
     return os.path.join("./config", "file_info", config.local_checksums_file)
 
 def get_cdkey_path() -> str:
-    return os.path.join(get_nwn_path(), "nwncdkey.ini") 
+    return os.path.join(get_nwn_path(), "nwncdkey.ini")
+
+def get_nwnplayer_path() -> str:
+    return os.path.join(get_nwn_path(), "nwnplayer.ini") 
 
 def get_windows_hosts_path() -> str:
     return os.path.join("C:/Windows/System32/drivers/etc", "hosts") 

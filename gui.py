@@ -130,10 +130,12 @@ background_label = Label(mainframe, image=background_image, borderwidth=0, backg
 background_label.grid(row=0,column=0, rowspan=8, columnspan=8)
 
 launch_button = _create_label_button("Launch")
-launch_button.place(in_=mainframe, anchor="w", relx=.01, rely=.6)
+launch_button.place(in_=mainframe, anchor="nw", relx=.01, rely=.55)
 #launch_button.grid(row=6, column=0)
 
 def _trigger_launch(e):
+    config.set_player_name(player_var.get())
+
     if dm_var.get():
         subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
             " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())
@@ -142,10 +144,42 @@ def _trigger_launch(e):
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
+def _change_player_conf(*args):
+    for key, value in config.confs.items():
+        if value["name_full"] == server_var.get():
+            config.setup_config_for(value["name_short"])
+            break
+
+player_name_label = Label(text = "Player name: ", borderwidth = 0, width=0,
+        padx=2, pady=2,
+        font="TkTextFond 10 bold", foreground="#efeeee",
+        background="#595C5A")
+player_name_label.place(in_=mainframe, anchor="nw", relx=.01, rely=.655)
+
+player_var = StringVar()
+player_combobox = ttk.Combobox(mainframe, textvariable=player_var, width=29)
+player_combobox["values"] = config.main_conf_values["player_names"]
+player_var.set(config.player_name)
+#player_combobox.state(['readonly'])
+player_combobox.place(in_=mainframe, anchor="nw", relx=.232, rely=.655)
+#player_var.trace("w", _change_player_conf)
+
+def _save_player():
+    if player_var.get() not in config.main_conf_values["player_names"]:
+        config.main_conf_values["player_names"].append(player_var.get())
+        config.serialize_to_main_conf(["player_names"], [config.main_conf_values["player_names"]])
+
+player_save_button = Label(text = "Save Name", borderwidth = 0, width=0,
+        padx=2, pady=2,
+        font="TkTextFond 10 bold", foreground="#efeeee",
+        background="#494C4A")
+player_save_button.place(in_=mainframe, anchor="nw", relx=.565, rely=.655)
+player_save_button.bind("<Button-1>",lambda e:_save_player())
+
 nwn_path = StringVar()
 nwn_path.set(path_finder.get_nwn_path())
 nwn_path_label = _create_label(nwn_path)
-nwn_path_label.place(in_=mainframe, anchor="e", relx=.99, rely=.6)
+nwn_path_label.place(in_=mainframe, anchor="w", relx=.232, rely=.6)
 
 def _trigger_path_dialogue(e):
     path = askdirectory(title="Select NWN installation directory")
@@ -155,7 +189,7 @@ def _trigger_path_dialogue(e):
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
 update_button = _create_label_button("Update")
-update_button.place(in_=mainframe, anchor="w", relx=.01, rely=.76)
+update_button.place(in_=mainframe, anchor="nw", relx=.01, rely=.76)
 _image_to_disabled(update_button)
 
 music_var = IntVar()
@@ -187,7 +221,7 @@ dm_var = IntVar()
 dm_var.set(config.main_conf_values["login_as_dm"])
 dm_checkbox = Checkbutton(mainframe, text="Connect as DM", variable=dm_var, foreground="#ffe0e0",
     selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_dm_checkbox_clicked)
-dm_checkbox.place(in_=mainframe, anchor="w", relx=0.01, rely=.68)
+dm_checkbox.place(in_=mainframe, anchor="w", relx=0.01, rely=.73)
 
 dm_pass_label = Label(text = "Password: ", borderwidth = 3, width=0,
         padx=2, pady=2,
@@ -237,7 +271,7 @@ update_status_label = Label(mainframe, textvariable=update_status,
     relief = SUNKEN, padx=2, pady=2,
     font="TkTextFond 10 bold", foreground="#efeeee",
     background="#393b39")
-update_status_label.place(in_=mainframe, anchor="nw", relx=.232, rely=.71)
+update_status_label.place(in_=mainframe, anchor="nw", relx=.232, rely=.76)
 
 delete_overrides_button = _create_label_button("Delete overrides..", font="TkHeadingFont 10")
 delete_overrides_button.place(in_=mainframe, anchor="se", relx=.99, rely=.99)

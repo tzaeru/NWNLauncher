@@ -1,7 +1,9 @@
-download_portraits = 1
-login_as_dm = 0
-download_overrides = 0
-download_music = 1
-allow_overwrite = 1
 show_gog_warning = true
+download_overrides = 1
+download_music = 1
+login_as_dm = 0
+player_names = ["tzaeru", "perkele"]
+download_portraits = 1
+current_player = ""
+allow_overwrite = 1
 default_server = "potm"

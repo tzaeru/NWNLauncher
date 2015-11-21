@@ -1,5 +1,6 @@
 import pytoml as toml
 import os
+import path_finder
 
 current_server = ""
 current_server_full_name = ""
@@ -10,6 +11,7 @@ nwn_server_address = ""
 config_path = ""
 main_conf_values = {}
 confs = {}
+player_name = ""
 
 def load_config(path):
     global confs
@@ -17,6 +19,9 @@ def load_config(path):
 
     global config_path
     config_path = path
+
+    global player_name
+    player_name = _load_player_name()
 
     global main_conf_values
 
@@ -64,6 +69,26 @@ def serialize_to_main_conf(keys : list, values : list):
         f.write(toml.dumps(config))
         f.flush()
         f.close()
+
+def _load_player_name() -> str:
+    with open(path_finder.get_nwnplayer_path()) as nwnplayer_conf:
+        for line in nwnplayer_conf:
+            if "Player Name" in line or "player name" in line:
+                return line[line.index('=') + 1:-1]
+
+def set_player_name(name: str):
+    f = open(path_finder.get_nwnplayer_path(), 'r')
+    lines = f.readlines()
+
+    for i in range(0, len(lines)):
+        if "Player Name" in lines[i] or "player name" in lines[i]:
+            lines[i] = lines[i][0:lines[i].index('=')+1] + name + '\n'
+    f.close()
+
+    f = open(path_finder.get_nwnplayer_path(), 'w')
+    f.writelines(lines)
+    # do the remaining operations on the file
+    f.close()
 
 def _load_configs(path) -> dict:
     confs = {}
