@@ -1,14 +1,16 @@
 # NWNLauncher
 A generic launcher and dependency downloader for Neverwinter Nights. The launcher is meant to be customized per-server and distributed as a standalone or an installer by the server.
 
-Work in progress! Files can currently be lost.
+Work in progress! Files can currently be lost. Meant to be multiplatform, but not tested on Linux nor OS X!
 
 ## Features
 
-* Able to determine NWN path on Windows, Linux and OS X
-* Downloads dependencies (haks, erfs, tlks, overrides, portraits..)
-* Able to update dependencies per-file according to a checksum or version number
-* Configurable to various styles of distribution
+* Able to determine NWN path on Windows. WIP: Linux and OS X support.
+* Downloads dependencies (haks, erfs, tlks, overrides, portraits..).
+* Able to update dependencies per-file according to a checksum or a version number.
+* Configurable to various styles of distribution.
+* Recognizes if the user is using the default GoG.com CD key and warns about it.
+* Can write to Windows hosts file to speed up launch.
 
 ## Usage
 
