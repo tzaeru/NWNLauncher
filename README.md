@@ -8,9 +8,12 @@ Work in progress! Files can currently be lost. Meant to be multiplatform, but no
 * Able to determine NWN path on Windows. WIP: Linux and OS X support.
 * Downloads dependencies (haks, erfs, tlks, overrides, portraits..).
 * Able to update dependencies per-file according to a checksum or a version number.
-* Configurable to various styles of distribution.
+* Configurable to various styles of distribution. You can use a custom file server or even NWVault for dependencies.
 * Recognizes if the user is using the default GoG.com CD key and warns about it.
 * Can write to Windows hosts file to speed up launch.
+* Supports both PC and DM connections.
+* Checkboxes for whether to download overrides, music, portraits.
+* Multiple server configurations per one launcher. Simply choose your server from a drop-down!
 
 ## Usage
 
