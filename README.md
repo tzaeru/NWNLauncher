@@ -1,11 +1,11 @@
 # NWNLauncher
-A generic launcher and dependency downloader for Neverwinter Nights. The launcher is meant to be customized per-server and distributed as a standalone or an installer by the server.
+A generic multiplatform launcher and dependency downloader for Neverwinter Nights. The launcher is meant to be customized per-server and distributed as a standalone or an installer by the server.
 
-Work in progress! Files can currently be lost. Meant to be multiplatform, but not tested on Linux nor OS X!
+Work in progress! Files can currently be lost. Made to be multiplatform, but not tested on Linux nor OS X!
 
 ## Features
 
-* Able to determine NWN path on Windows. WIP: Linux and OS X support.
+* Automatically finds NWN's path on Windows. WIP: Linux and OS X support.
 * Downloads dependencies (haks, erfs, tlks, overrides, portraits..).
 * Able to update dependencies per-file according to a checksum or a version number.
 * Configurable to various styles of distribution. You can use a custom file server or even NWVault for dependencies.
@@ -14,6 +14,7 @@ Work in progress! Files can currently be lost. Meant to be multiplatform, but no
 * Supports both PC and DM connections.
 * Checkboxes for whether to download overrides, music, portraits.
 * Multiple server configurations per one launcher. Simply choose your server from a drop-down!
+* Picks the server IP from a remote configuration file; Can change server IP without reinstalling NWN Launcher.
 
 ## Usage
 
