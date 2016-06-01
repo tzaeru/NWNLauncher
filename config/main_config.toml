@@ -1,10 +1,10 @@
 login_as_dm = 0
-allow_overwrite = 1
-player_names = ["tzaeru", "perkele"]
-download_music = 1
-show_gog_warning = true
-download_overrides = 1
-show_hosts_file_popupmsg = true
-default_server = "potm"
 download_portraits = 1
 current_player = ""
+download_overrides = 1
+player_names = ["tzaeru", "perkele"]
+show_hosts_file_popupmsg = true
+default_server = "potm"
+download_music = 0
+show_gog_warning = true
+allow_overwrite = 1

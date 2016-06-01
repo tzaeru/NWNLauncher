@@ -65,7 +65,7 @@ def _create_label(text_v) -> Label:
     label = Label(mainframe, textvariable = text_v,
         borderwidth = 3, width=0,
         relief = SUNKEN, padx=2, pady=2,
-        font="TkTextFond 10 bold", foreground="#efeeee",
+        font="TkTextFond 9", foreground="#efeeee",
         background="#393b39")
 
     return label
@@ -217,10 +217,21 @@ nwn_path_label.place(in_=mainframe,
     relx=config.get_gui_conf("nwn_path_label_pos")[0],
     rely=config.get_gui_conf("nwn_path_label_pos")[1])
 
+nwn_path_name_label = Label(text = "NWN Path:", borderwidth = 0, width=0,
+        padx=2, pady=2,
+        font=config.get_gui_conf("nwn_path_name_label_font", "label_font"),
+        foreground=config.get_gui_conf("nwn_path_name_label_fg_color", "label_fg_color"),
+        background=config.get_gui_conf("nwn_path_name_label_bg_color", "label_bg_color"))
+nwn_path_name_label.place(in_=mainframe,
+    anchor=config.get_gui_conf("nwn_path_name_label_anchor"),
+    relx=config.get_gui_conf("nwn_path_name_label_pos")[0],
+    rely=config.get_gui_conf("nwn_path_name_label_pos")[1])
+
 def _trigger_path_dialogue(e):
     path = askdirectory(title="Select NWN installation directory")
-    nwn_path.set(path)
-    path_finder.set_nwn_path(path)
+    if len(path) > 0:
+        nwn_path.set(path)
+        path_finder.set_nwn_path(path)
 
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
@@ -233,8 +244,11 @@ _image_to_disabled(update_button, "update")
 
 music_var = IntVar()
 music_var.set(config.main_conf_values["download_music"])
-music_checkbox = Checkbutton(mainframe, text="Music", variable=music_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
+music_checkbox = Checkbutton(mainframe, text="Music", variable=music_var,
+    foreground=config.get_gui_conf("music_checkbox_select_color", "checkbox_fg_color"),
+    background=config.get_gui_conf("music_checkbox_bg_color", "checkbox_bg_color"),
+    selectcolor=config.get_gui_conf("music_checkbox_fg_color", "checkbox_select_color"),
+    borderwidth=0, pady=0, command=_do_check_update)
 music_checkbox.place(in_=mainframe,
     anchor=config.get_gui_conf("music_checkbox_anchor"),
     relx=config.get_gui_conf("music_checkbox_pos")[0],
@@ -242,8 +256,11 @@ music_checkbox.place(in_=mainframe,
 
 overrides_var = IntVar()
 overrides_var.set(config.main_conf_values["download_overrides"])
-overrides_checkbox = Checkbutton(mainframe, text="Overrides", variable=overrides_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
+overrides_checkbox = Checkbutton(mainframe, text="Overrides", variable=overrides_var,
+    foreground=config.get_gui_conf("overrides_checkbox_select_color", "checkbox_fg_color"),
+    background=config.get_gui_conf("overrides_checkbox_bg_color", "checkbox_bg_color"),
+    selectcolor=config.get_gui_conf("overrides_checkbox_fg_color", "checkbox_select_color"),
+    borderwidth=0, pady=0, command=_do_check_update)
 overrides_checkbox.place(in_=mainframe,
     anchor=config.get_gui_conf("overrides_checkbox_anchor"),
     relx=config.get_gui_conf("overrides_checkbox_pos")[0],
@@ -251,8 +268,11 @@ overrides_checkbox.place(in_=mainframe,
 
 portraits_var = IntVar()
 portraits_var.set(config.main_conf_values["download_portraits"])
-portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
+portraits_checkbox = Checkbutton(mainframe, text="Portraits", variable=portraits_var,
+    foreground=config.get_gui_conf("portraits_checkbox_select_color", "checkbox_fg_color"),
+    background=config.get_gui_conf("portraits_checkbox_bg_color", "checkbox_bg_color"),
+    selectcolor=config.get_gui_conf("portraits_checkbox_fg_color", "checkbox_select_color"),
+    borderwidth=0, pady=0, command=_do_check_update)
 portraits_checkbox.place(in_=mainframe,
     anchor=config.get_gui_conf("portraits_checkbox_anchor"),
     relx=config.get_gui_conf("portraits_checkbox_pos")[0],
@@ -260,8 +280,11 @@ portraits_checkbox.place(in_=mainframe,
 
 overwrite_var = IntVar()
 overwrite_var.set(config.main_conf_values["allow_overwrite"])
-overwrite_checkbox = Checkbutton(mainframe, text="Allow overwriting dependencies", variable=overwrite_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_do_check_update)
+overwrite_checkbox = Checkbutton(mainframe, text="Allow overwriting dependencies", variable=overwrite_var,
+    foreground=config.get_gui_conf("overwrite_checkbox_select_color", "checkbox_fg_color"),
+    background=config.get_gui_conf("overwrite_checkbox_bg_color", "checkbox_bg_color"),
+    selectcolor=config.get_gui_conf("overwrite_checkbox_fg_color", "checkbox_select_color"),
+    borderwidth=0, pady=0, command=_do_check_update)
 overwrite_checkbox.place(in_=mainframe,
     anchor=config.get_gui_conf("overwrite_checkbox_anchor"),
     relx=config.get_gui_conf("overwrite_checkbox_pos")[0],
@@ -270,8 +293,11 @@ overwrite_checkbox.place(in_=mainframe,
 # DM Checkbox
 dm_var = IntVar()
 dm_var.set(config.main_conf_values["login_as_dm"])
-dm_checkbox = Checkbutton(mainframe, text="Connect as DM", variable=dm_var, foreground="#ffe0e0",
-    selectcolor="#9a9b99", background="#5a5b59", borderwidth=0, pady=0, command=_dm_checkbox_clicked)
+dm_checkbox = Checkbutton(mainframe, text="Connect as DM", variable=dm_var,
+    foreground=config.get_gui_conf("dm_checkbox_select_color", "checkbox_fg_color"),
+    background=config.get_gui_conf("dm_checkbox_bg_color", "checkbox_bg_color"),
+    selectcolor=config.get_gui_conf("dm_checkbox_fg_color", "checkbox_select_color"),
+    borderwidth=0, pady=0, command=_dm_checkbox_clicked)
 dm_checkbox.place(in_=mainframe,
     anchor=config.get_gui_conf("dm_checkbox_anchor"),
     relx=config.get_gui_conf("dm_checkbox_pos")[0],
@@ -329,7 +355,7 @@ update_button.bind("<Button-1>", _trigger_update)
 update_status = StringVar()
 update_status.set(dependency_manager.status + "\nHi" + "\nHello")
 update_status_label = Label(mainframe, textvariable=update_status,
-    width=36, height=3, anchor="w",
+    width=40, height=4, anchor="w",
     justify=LEFT, borderwidth = 3,
     relief = SUNKEN, padx=2, pady=2,
     font=config.get_gui_conf("update_status_label_font", "label_font"),

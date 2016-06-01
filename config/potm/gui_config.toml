@@ -30,7 +30,7 @@ save_button_anchor = "nw"
 save_button_pos = [0.5, 0.88]
 save_button_font = "TkHeadingFont 11 bold"
 save_button_fg_color = "#efeeee"
-save_button_bg_color = "#494C4A"
+save_button_bg_color = "#1f1c1c"
 
 # ------------------------
 # Labels
@@ -38,25 +38,29 @@ save_button_bg_color = "#494C4A"
 
 label_font = "TkTextFond 10 bold"
 label_fg_color = "#efeeee"
-label_bg_color = "#393b39"
+label_bg_color = "#262222"
 
 player_name_label_anchor = "nw"
 player_name_label_pos = [0.28, 0.88]
 player_name_label_font = "TkTextFond 10 bold"
 player_name_label_fg_color = "#efeeee"
-player_name_label_bg_color = "#595C5A"
+player_name_label_bg_color = "#1f1c1c"
 
 nwn_path_label_anchor = "w"
-nwn_path_label_pos = [0.03, 0.8]
+nwn_path_label_pos = [0.175, 0.83]
+
+nwn_path_name_label_anchor = "w"
+nwn_path_name_label_pos = [0.03, 0.83]
+nwn_path_name_label_bg_color = "#1f1c1c"
 
 dm_pass_label_anchor = "ne"
-dm_pass_label_pos = [0.5, 0.73]
+dm_pass_label_pos = [0.5, 0.743]
 
 dm_pass_entry_anchor = "nw"
-dm_pass_entry_pos = [0.5, 0.73]
+dm_pass_entry_pos = [0.5, 0.75]
 
 update_status_label_anchor = "nw"
-update_status_label_pos = [0.1, 0.5]
+update_status_label_pos = [0.03, 0.5]
 update_status_label_font = "TkTextFond 10 bold"
 update_status_label_fg_color = "#efeeee"
 update_status_label_bg_color = "#393b39"
@@ -75,21 +79,21 @@ server_combobox_pos = [0.0, 0.0]
 # Checkboxes
 # ------------------------
 
-checkbox_fg_color = "#ffe0e0"
-checkbox_bg_color = "#ffe0e0"
+checkbox_fg_color = "#fff9f9"
+checkbox_bg_color = "#262222"
 checkbox_select_color = "#9a9b99"
 
 music_checkbox_anchor = "nw"
-music_checkbox_pos = [0.4, 0.64]
+music_checkbox_pos = [0.313, 0.7]
 
 overrides_checkbox_anchor = "nw"
-overrides_checkbox_pos = [0.25, 0.64]
+overrides_checkbox_pos = [0.165, 0.7]
 
 portraits_checkbox_anchor = "nw"
-portraits_checkbox_pos = [0.1, 0.64]
+portraits_checkbox_pos = [0.03, 0.7]
 
-overwrite_checkbox_anchor = "nw"
-overwrite_checkbox_pos = [0.7, 0.64]
+overwrite_checkbox_anchor = "ne"
+overwrite_checkbox_pos = [0.97, 0.7]
 
 dm_checkbox_anchor = "ne"
-dm_checkbox_pos = [0.97, 0.73]
+dm_checkbox_pos = [0.97, 0.75]

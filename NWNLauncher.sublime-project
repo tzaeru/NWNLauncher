@@ -11,7 +11,8 @@
 			],
 			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
 			"name": "NWNLauncher",
-			"selector": "source.python"
+			"selector": "source.python",
+			"working_dir": "${project_path}"
 		},
 		{
 			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
