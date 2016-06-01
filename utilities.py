@@ -1,6 +1,14 @@
 import path_finder
 import os, sys
 import platform
+import shutil
+
+def backup_logs():
+    print("Backing logs up..")
+    try:
+        shutil.copy(path_finder.get_logs_path(), path_finder.get_logs_path() + "_backup")
+    except IOError as err:
+        print("Couldn't backup logs!")
 
 # Check if hosts entry is already added.
 def _check_authentication_skip():

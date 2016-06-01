@@ -31,7 +31,11 @@ def load_config(path):
     with open(os.path.join(path, "main_config.toml")) as conffile:
         config = toml.load(conffile)
         main_conf_values = config
-        setup_config_for(config["default_server"])
+        if config["default_server"] in confs:
+            setup_config_for(config["default_server"])
+        else:
+            serialize_to_main_conf(["default_server"], [next(iter(confs.values()))["name_short"]])
+            setup_config_for(next(iter(confs.values()))["name_short"])
 
 def setup_config_for(server_name):
     print("setting up server for: " + server_name)

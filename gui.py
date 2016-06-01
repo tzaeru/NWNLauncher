@@ -152,6 +152,8 @@ launch_button.place(in_=mainframe, anchor=config.get_gui_conf("launch_button_anc
 def _trigger_launch(e):
     config.set_player_name(player_var.get())
 
+    utilities.backup_logs()
+
     if dm_var.get():
         subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
             " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())

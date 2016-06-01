@@ -74,6 +74,12 @@ def get_nwnplayer_path() -> str:
 def get_windows_hosts_path() -> str:
     return os.path.join("C:/Windows/System32/drivers/etc", "hosts") 
 
+def get_logs_path() -> str:
+    if platform.system() == "Windows":
+        return os.path.join(get_nwn_path(), "logs")
+    else:
+        return None
+
 def _resolve_path() -> str:
     if platform.system() == "Windows":
         return _resolve_path_win32()
