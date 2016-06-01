@@ -11,11 +11,14 @@ nwn_server_address = ""
 config_path = ""
 main_conf_values = {}
 confs = {}
+gui_confs = {}
 player_name = ""
 
 def load_config(path):
-    global confs
-    confs = _load_configs(path)
+    global confs, gui_confs
+    confs, gui_confs = _load_configs(path)
+
+    print(gui_confs)
 
     global config_path
     config_path = path
@@ -52,6 +55,19 @@ def setup_config_for(server_name):
     global current_server_full_name
     current_server_full_name = server_config["name_full"]
 
+def get_gui_conf(key, alt_key = None, default_value = None) -> object:
+    if key in gui_confs[current_server]:
+        return gui_confs[current_server][key]
+    else:
+        if alt_key in gui_confs[current_server]:
+            return gui_confs[current_server][alt_key]
+    return default_value
+
+def get_server_conf(key, default_value = None) -> object:
+    if key in confs[current_server]:
+        return confs[current_server][key]
+    return default_value
+
 def serialize_to_main_conf(keys : list, values : list):
     config = None
     print("Setting keys: ", keys, " to values: ", values)
@@ -71,10 +87,13 @@ def serialize_to_main_conf(keys : list, values : list):
         f.close()
 
 def _load_player_name() -> str:
-    with open(path_finder.get_nwnplayer_path()) as nwnplayer_conf:
-        for line in nwnplayer_conf:
-            if "Player Name" in line or "player name" in line:
-                return line[line.index('=') + 1:-1]
+    try:
+        with open(path_finder.get_nwnplayer_path()) as nwnplayer_conf:
+            for line in nwnplayer_conf:
+                if "Player Name" in line or "player name" in line:
+                    return line[line.index('=') + 1:-1]
+    except:
+        print("Couldn't open NWN config file.")
 
 def set_player_name(name: str):
     f = open(path_finder.get_nwnplayer_path(), 'r')
@@ -92,14 +111,26 @@ def set_player_name(name: str):
 
 def _load_configs(path) -> dict:
     confs = {}
+    gui_confs = {}
 
     for item in os.listdir(path):
         if os.path.isdir(os.path.join(path, item)):
+            name_short = ""
+
             try:
                 with open(os.path.join(path, item, "config.toml")) as conffile:
                     config = toml.load(conffile)
-                    confs[config["name_short"]] = config
+                    name_short = config["name_short"]
+                    confs[name_short] = config
             except IOError:
                 continue
 
-    return confs
+            try:
+                with open(os.path.join(path, item, "gui_config.toml")) as conffile:
+                    config = toml.load(conffile)
+                    gui_confs[name_short] = config
+            except IOError:
+                print("Failed to open GUI conf file.")
+                continue
+
+    return confs, gui_confs

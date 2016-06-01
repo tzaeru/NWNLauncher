@@ -1,0 +1,64 @@
+# ------------------------
+# General
+# ------------------------
+
+put_labels_on_buttons = false
+
+# ------------------------
+# Buttons
+# ------------------------
+
+launch_button_anchor = "nw"
+launch_button_pos = [0.1, 0.55]
+
+update_button_anchor = "nw"
+update_button_pos = [0.1, 0.76]
+
+website_button_anchor = "nw"
+website_button_pos = [0.1, 0.9]
+
+delete_overrides_button_achor = "se"
+delete_overrides_button_pos = [0.99, 0.99]
+
+# ------------------------
+# Labels
+# ------------------------
+
+label_default_font = "TkTextFond 10 bold"
+label_default_fg_color = "#efeeee"
+label_default_bg_color = "#393b39"
+
+player_name_label_anchor = "nw"
+player_name_label_pos = [0.1, 0.655]
+player_name_label_font = "TkTextFond 10 bold"
+player_name_label_fg_color = "#efeeee"
+player_name_label_bg_color = "#595C5A"
+
+nwn_path_label_anchor = "w"
+nwn_path_label_pos = [0.232, 0.6]
+
+dm_pass_label_anchor = "w"
+dm_pass_label_pos = [0.01, 0.73]
+
+# ------------------------
+# Checkboxes
+# ------------------------
+
+checkbox_default_fg_color = "#ffe0e0"
+checkbox_default_bg_color = "#ffe0e0"
+checkbox_default_select_color = "#9a9b99"
+
+music_checkbox_anchor = "w"
+music_checkbox_pos = [0.3, 0.975]
+
+overrides_checkbox_anchor = "w"
+overrides_checkbox_pos = [0.15, 0.975]
+
+portraits_checkbox_anchor = "w"
+portraits_checkbox_pos = [0.27, 0.975]
+
+overwrite_checkbox_anchor = "w"
+overwrite_checkbox_pos = [0.39, 0.975]
+
+dm_checkbox_anchor = "w"
+dm_checkbox_pos = [0.01, 0.73]
