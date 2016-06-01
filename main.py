@@ -38,7 +38,7 @@ def _add_skip_authentication():
     if platform.system() == "Windows":
         hosts = None
 
-        with open(path_finder.get_windows_hosts_path()) as hosts_file:
+        """with open(path_finder.get_windows_hosts_path()) as hosts_file:
             hosts = hosts_file.read()
 
             #Early bails to avoid writing twice to it
@@ -55,7 +55,7 @@ def _add_skip_authentication():
             f = open(path_finder.get_windows_hosts_path(),'w')
             f.write(hosts)
             f.flush()
-            f.close()
+            f.close()"""
 
 _add_skip_authentication()
 
