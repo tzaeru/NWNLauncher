@@ -306,13 +306,13 @@ def _find_version_match(entry_a, entries_b) -> bool:
     return False
 
 def _create_dummy_checksum_data_file():
-    f = open(path_finder.get_local_checksums_path(),'w')
+    f = open(path_finder.get_local_checksums_path(),'w+')
     print("Creating dummy checksum data file..")
     f.write('[files]\n')
     f.close()
 
 def _create_dummy_version_data_file():
-    f = open(path_finder.get_local_version_data_path(),'w')
+    f = open(path_finder.get_local_version_data_path(),'w+')
     print("Creating dummy version data file..")
     f.write('nwn_server_address = "' + config.nwn_server_address + '"\n\n[files]')
     f.close()

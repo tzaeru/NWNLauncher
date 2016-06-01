@@ -56,9 +56,13 @@ def get_config_path() -> str:
     return "./config";
 
 def get_local_version_data_path() -> str:
+    if not os.path.exists(os.path.join("./config", "file_info")):
+        os.makedirs(os.path.join("./config", "file_info"))
     return os.path.join("./config", "file_info", config.local_versions_file)
 
 def get_local_checksums_path() -> str:
+    if not os.path.exists(os.path.join("./config", "file_info")):
+        os.makedirs(os.path.join("./config", "file_info"))
     return os.path.join("./config", "file_info", config.local_checksums_file)
 
 def get_cdkey_path() -> str:

@@ -19,6 +19,8 @@ from PIL import Image, ImageTk
 
 import webbrowser
 
+import utilities
+
 gui_update_cycles = 0
 update_check_queued = False
 
@@ -298,6 +300,10 @@ def _check_update_status(repeat = True):
             "\nCurrent progress: " + current_progress_str + " %" +
             "\nTotal progress: " + total_progress_str)  + " %"
         update_status.set(update_text)
+    elif dependency_manager.status is dependency_manager.STATUS_CHECKING:
+        update_text = ("Checking for updates" +
+            '.' * (1 + gui_update_cycles%3))
+        update_status.set(update_text)
     else:
         update_status.set(dependency_manager.status)
 
@@ -375,11 +381,52 @@ def _check_for_gog_cd_key():
         public_key1 = ""
         for i in range(0,8):
             public_key1 += key1[1 + i*2]
+        print("Public key: " + public_key1)
         if public_key1 == "Q7RREKF3":
             _gog_popupmsg()
 
 if config.main_conf_values["show_gog_warning"]:
     root.after(50, _check_for_gog_cd_key)
+
+def _hosts_file_popupmsg():
+    top = Toplevel()
+    top.title("Speed up launch by modifying Hosts?")
+
+    msg = ttk.Label(top, text="NWN launch time can be improved by modifying the Windows host file.\n\n" + 
+        "However, some antivirus software may disallow this. Should we try it?\n", font=NORM_FONT)
+    msg.pack()
+
+    dont_show_again_var = IntVar()
+    dont_show_again_var.set(0)
+
+    def serialize_gog_warning():
+        config.serialize_to_main_conf(["show_hosts_file_popupmsg"], [dont_show_again_var.get() != True])
+
+    dont_show_again_checkbox = Checkbutton(top, text="Don't show again", variable=dont_show_again_var,
+        command=serialize_gog_warning)
+    dont_show_again_checkbox.pack()
+
+    def do_authentication_skip():
+        status = utilities._add_authentication_skip()
+        top.destroy()
+        status_level = Toplevel()
+        msg = None
+        if (status):
+            status_level.title("Success")
+            msg = ttk.Label(status_level, text="Modification succesful - enjoy your faster load time!", font=NORM_FONT)
+        else:
+            status_level.title("Failure")
+            msg = ttk.Label(status_level, text="Modification unsuccesful - no file access?", font=NORM_FONT)
+        msg.pack()
+
+    button_yes = ttk.Button(top, text="Try it!", command=do_authentication_skip)
+    button_yes.pack()
+
+    button_no = ttk.Button(top, text="No, let's skip.", command=top.destroy)
+    button_no.pack()
+
+if config.main_conf_values["show_hosts_file_popupmsg"] and not utilities._check_authentication_skip():
+    root.after(50, _hosts_file_popupmsg)
 
 root.wm_protocol("WM_DELETE_WINDOW", on_closing)
 
