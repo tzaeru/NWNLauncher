@@ -1,0 +1,1021 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"nwn_",
+				"nwnplayer_conf"
+			],
+			[
+				"load_",
+				"_load_player_name"
+			],
+			[
+				"STATUS",
+				"STATUS_DOWNLOADING	statement"
+			],
+			[
+				"depende",
+				"dependency_manager"
+			],
+			[
+				"mod",
+				"modified_at"
+			],
+			[
+				"dm_p",
+				"dm_pass_var	statement"
+			],
+			[
+				"main",
+				"main_conf_values	statement"
+			],
+			[
+				"get",
+				"get_cdkey_path	function"
+			],
+			[
+				"server",
+				"server_name	param"
+			],
+			[
+				"back_",
+				"background_image	globalstmt"
+			],
+			[
+				"checksum",
+				"checksum_entry	statement"
+			],
+			[
+				"_chunk",
+				"_chunk_report	function"
+			],
+			[
+				"total_",
+				"total_size_of_updates	statement"
+			],
+			[
+				"total",
+				"total_size_of_updates	statement"
+			],
+			[
+				"path",
+				"path_finder	module"
+			],
+			[
+				"no",
+				"NO_PATH	statement"
+			],
+			[
+				"resolved",
+				"resolved_path"
+			],
+			[
+				"text",
+				"textvariable"
+			],
+			[
+				"theme",
+				"theme_names	function"
+			],
+			[
+				"rel",
+				"relwidth"
+			],
+			[
+				"background",
+				"background_label	statement"
+			],
+			[
+				"universe",
+				"Universe"
+			],
+			[
+				"defa",
+				"Default"
+			],
+			[
+				"print",
+				"println!	println! …"
+			],
+			[
+				"Compone",
+				"ComponentManager	module"
+			],
+			[
+				"Com",
+				"ComponentPool	class"
+			],
+			[
+				"Comp",
+				"ComponentManager	module"
+			],
+			[
+				"SERI",
+				"SERIALIZE_COMPONENT_NEW	statement"
+			],
+			[
+				"SERIALI",
+				"SERIALIZE_COMPONENT_NEW	statement"
+			],
+			[
+				"COMpon",
+				"ComponentTypes	module"
+			],
+			[
+				"_resolve",
+				"_resolve_movement_phase	function"
+			],
+			[
+				"client",
+				"clientevents	module"
+			],
+			[
+				"amount",
+				"amount_of_tilesets	statement"
+			],
+			[
+				"amount_of",
+				"amount_of_tiles	statement"
+			],
+			[
+				"Cl",
+				"clientevents	module"
+			],
+			[
+				"CLIENT_",
+				"CLIENT_RECEIVED_MAP_SERIALIZATION	statement"
+			],
+			[
+				"SERIA",
+				"SERIALIZE_MAP_FULL	statement"
+			],
+			[
+				"Server",
+				"ServerMessages	class"
+			],
+			[
+				"tileset",
+				"tileset_serialization	statement"
+			],
+			[
+				"Entit",
+				"EntityManager	class"
+			],
+			[
+				"Entity",
+				"EntityManager	module"
+			],
+			[
+				"Enti",
+				"EntityManager	module"
+			],
+			[
+				"dir",
+				"DirectObject	class"
+			],
+			[
+				"mouse_pos",
+				"mouse_position	statement"
+			],
+			[
+				"mouse_",
+				"mouse_position	statement"
+			],
+			[
+				"COmp",
+				"ComponentTypes	class"
+			],
+			[
+				"Component",
+				"ComponentTypes	class"
+			],
+			[
+				"Compon",
+				"ComponentTypes	class"
+			],
+			[
+				"self",
+				"self"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
+				"pn",
+				"PNMImage"
+			],
+			[
+				"sca",
+				"setScale"
+			],
+			[
+				"event",
+				"event"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.py",
+			"settings":
+			{
+				"buffer_size": 961,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dependency_manager.py",
+			"settings":
+			{
+				"buffer_size": 11486,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "gui.py",
+			"settings":
+			{
+				"buffer_size": 15789,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "utilities.py",
+			"settings":
+			{
+				"buffer_size": 1531,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "config/main_config.toml",
+			"settings":
+			{
+				"buffer_size": 239,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "config.py",
+			"settings":
+			{
+				"buffer_size": 2960,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "freeze_builds.py",
+			"settings":
+			{
+				"buffer_size": 1026,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Test"
+				]
+			],
+			[
+				"Packages/Rust/Cargo.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Rust/Cargo.sublime-build",
+					"Test"
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/Rust/Rust.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Rust/Rust.sublime-build",
+					""
+				],
+				[
+					"Packages/Rust/Rust.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/Rust/Rust.sublime-build",
+				"Run"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 104.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"enable pack",
+				"Package Control: Enable Package"
+			],
+			[
+				"disabl",
+				"Package Control: Disable Package"
+			],
+			[
+				"install pack",
+				"Package Control: Install Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable p",
+				"Package Control: Disable Package"
+			],
+			[
+				"disable pack",
+				"Package Control: Disable Package"
+			],
+			[
+				"disable pa",
+				"Package Control: Disable Package"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable ",
+				"Package Control: Enable Package"
+			],
+			[
+				"disable ",
+				"Package Control: Disable Package"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			],
+			[
+				"list pack",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: List Packages"
+			],
+			[
+				"upgrade ",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"Package Control: disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: re",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Disable Package"
+			],
+			[
+				"Package Control: remo",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 287.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/tzaeru/Documents/NWNLauncher",
+		"/C/Users/tzaeru/Documents/NWNLauncher/__pycache__",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config"
+	],
+	"file_history":
+	[
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/Program Files (x86)/GOG.com/Neverwinter Nights Diamond Edition/nwncdkey.ini",
+		"/C/Users/tzaeru/Documents/NWNLauncher/path_finder.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/gui.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config/main_config.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/freeze_builds.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/inno_installer.iss",
+		"/C/Users/tzaeru/Documents/NWNLauncher/admin.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/NWNLauncher.sublime-project",
+		"/C/Users/tzaeru/Documents/NWNLauncher/main.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config/amia/config.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/dependency_manager.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/windows_manifest.xml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config/potm/config.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/test.py",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config/config.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config/potm/checksums.toml",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/tzaeru/Documents/NWNLauncher/config.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/example_file_listing.toml",
+		"/C/Program Files (x86)/GOG.com/Neverwinter Nights Diamond Edition/checksums.toml",
+		"/F/BroswerDownloads/files.toml",
+		"/C/Users/tzaeru/Documents/NWNLauncher/.gitignore",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/C/Users/tzaeru/Documents/NWNLauncher/COPYING",
+		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/UI/Audio/DeviceListUI.cs",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/UnityC#.sublime-settings",
+		"/C/Users/Jaltsu/Documents/ues2/Assets/Code/Audio/Grade.cs",
+		"/C/Users/Jaltsu/Documents/ues2/ues2.sublime-project",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system_worker.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/scifi.sublime-build",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/sector.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/galaxy.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/solar_system.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/Cargo.toml",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity_bin.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/create_universe.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/universe.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/system_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/entity_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component_list.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component_manager.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/create_npcs.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/main.rs",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp18618/home/tzaeru/jotain.txt",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp19754/home/tzaeru/kou.txt",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/denizens/npcai.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/mod.rs",
+		"/C/Users/Jaltsu/AppData/Local/Temp/scp14670/home/uplauseadmin/pulsebackend_review/api/controllers/DataProviderController.js",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/secs/component.rs",
+		"/C/Users/Jaltsu/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/planet.rs",
+		"/C/Users/Jaltsu/Documents/revelations-from-the-void/src/universe/mod.rs",
+		"/C/projects/scifi/Cargo.toml",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/RustAutoComplete.sublime-settings",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/RustAutoComplete/Preferences.sublime-settings",
+		"/C/projects/scifi/src/universe/tmp2jz8xa",
+		"/C/projects/scifi/src/universe/tmp00xix3",
+		"/C/projects/scifi/src/secs/lens.rs",
+		"/C/projects/scifi/src/secs/system.rs",
+		"/C/projects/scifi/src/secs/mod.rs",
+		"/C/projects/scifi/src/secs/system_worker.rs",
+		"/C/projects/scifi/src/secs/system_manager.rs",
+		"/C/projects/scifi/src/secs/entity_bin.rs",
+		"/C/projects/scifi/src/secs/entity.rs",
+		"/C/projects/scifi/src/secs/component.rs",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/User/scifi.sublime-build",
+		"/C/projects/scifi/src/universe/sector.rs",
+		"/C/projects/scifi/scifi.sublime-workspace",
+		"/C/projects/scifi/scifi.sublime-project",
+		"/C/projects/scifi/src/SECS/component.rs",
+		"/C/projects/scifi/src/universe/mod.rs",
+		"/C/projects/scifi/src/main.rs",
+		"/C/projects/scifi/src/universe/universe.rs",
+		"/C/projects/scifi/src/universe/galaxy.rs",
+		"/C/projects/scifi/src/universe/sector_bin.rs",
+		"/C/projects/scifi/src/secs/lens",
+		"/C/projects/scifi/src/SECS/mod.rs",
+		"/C/projects/scifi/src/SECS",
+		"/C/projects/scifi/main.rs",
+		"/C/projects/scifi/scifi/src/main.rs",
+		"/C/projects/fields_of_red_sun/src/server/servercommunication.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/tileset.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/map.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/tile.py",
+		"/C/projects/fields_of_red_sun/src/client/clientcommunication.py",
+		"/C/Users/tzaeru/Documents/SPAI/Assets/Scripts/SPAI/README.txt",
+		"/C/projects/rust_stuff/rust.rs",
+		"/C/projects/fields_of_red_sun/src/client/client.py",
+		"/C/projects/fields_of_red_sun/src/server/server.py",
+		"/C/projects/fields_of_red_sun/src/test_server.py",
+		"/C/projects/fields_of_red_sun/src/test_client.py",
+		"/C/projects/fields_of_red_sun/src/game/creatures/herocomponent.py",
+		"/C/Users/tzaeru/AppData/Roaming/Sublime Text 3/Packages/Anaconda/README.md",
+		"/C/projects/fields_of_red_sun/src/game/servermessages.py",
+		"/C/projects/fields_of_red_sun/src/game/transformcomponent.py",
+		"/C/projects/fields_of_red_sun/src/client/spriterendersystem.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentPool.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityManager.py",
+		"/C/projects/fields_of_red_sun/src/PECS/Entity.py",
+		"/C/projects/fields_of_red_sun/src/client/playerinput.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentTypes.py",
+		"/C/projects/fields_of_red_sun/src/game/battlescape/spritecomponent.py",
+		"/C/projects/fields_of_red_sun/src/PECS/ComponentSystem.py",
+		"/C/projects/fields_of_red_sun/src/game/clientmessages.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityPool.py",
+		"/C/projects/fields_of_red_sun/src/utils/id_getters.py",
+		"/C/projects/fields_of_red_sun/src/PECS/SystemManager.py",
+		"/C/projects/fields_of_red_sun/src/game/creatures/herosystem.py",
+		"/C/projects/fields_of_red_sun/src/game/system/gameruleset.py",
+		"/C/Panda3D-1.10.0-x64/pandac/PandaModules.py",
+		"/C/projects/fields_of_red_sun/src/server/__init__.py",
+		"/C/projects/fields_of_red_sun/src/PECS/EntityTypes.py",
+		"/C/projects/fields_of_red_sun/src/game/gameevents.py",
+		"/C/projects/fields_of_red_sun/src/client/battlemap.py",
+		"/C/projects/fields_of_red_sun/src/client/clientevents.py",
+		"/C/projects/fields_of_red_sun/sublime_project/fields_of_red_sun.sublime-project",
+		"/C/projects/fields_of_red_sun/src/PECS/Component.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/echoclient-1.py",
+		"/C/projects/fields_of_red_sun/src/client/communication.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/stdiodemo.py",
+		"/C/Users/tzaeru/AppData/Local/Temp/echoclient.py",
+		"/C/projects/fields_of_red_sun/src/client/battleview.py"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"try ",
+			"_gog_popupmsg",
+			"_move_entry",
+			"checksum",
+			"_load_remote_files_data",
+			"_image_to_enabled",
+			"data_as_dict",
+			"_load_remote_files_data",
+			"str(",
+			"target_file",
+			"_move_entry",
+			"move_ent",
+			"[\"name\"]",
+			"target_file",
+			"target_file ",
+			"time",
+			"_find_entry_checksum_match",
+			"_create_label_button",
+			"overrides",
+			"_dm_checkbox_clicked",
+			"LAUNCH",
+			"launch",
+			"image=",
+			"print",
+			" in ",
+			"get_path",
+			"images/",
+			"set_path",
+			"set_nwn_path",
+			"get_path()",
+			"for ",
+			"_update_entry_to_local_data",
+			"_update_checksum_entry",
+			"status_updated",
+			"entries_to_update",
+			"_find_entry_checksum_match",
+			"_update_checksum_entry",
+			"_update_entry_to_local_data",
+			"_update_checksum_entry",
+			"_generate_file_md5",
+			"do_quit",
+			"35",
+			"_load_remote_files_data",
+			"path.join",
+			"+=",
+			"scifi",
+			"movement_target",
+			"print",
+			",\n",
+			"manager",
+			"boost",
+			"1.55",
+			"1.54",
+			"gui",
+			"Panda3dApp",
+			"foreground",
+			"24",
+			");\n",
+			"42",
+			"setSpecular",
+			"createMaterialSliders",
+			"sync",
+			"fps",
+			"world_cons",
+			"world_generat",
+			");\n",
+			"GL_",
+			"windowEvent",
+			"render",
+			"win",
+			"fps",
+			"show",
+			"l_dir1"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 961,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								961,
+								961
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 324.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "dependency_manager.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11486,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3982,
+								3982
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2062.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "gui.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15789,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15577,
+								15577
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6982.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "utilities.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1531,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1439,
+								1439
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "config/main_config.toml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 239,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								129,
+								129
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "config.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2960,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "freeze_builds.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1026,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								968,
+								968
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python 3/Python3.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 175.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.variable_get":
+	{
+		"height": 118.0
+	},
+	"pinned_build_system": "NWNLauncher",
+	"project": "NWNLauncher.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 319.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
