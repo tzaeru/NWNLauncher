@@ -41,6 +41,8 @@ def start_check(get_new_remote_data = False):
 
 
     remote_files_data = _load_remote_files_data(get_new_remote_data)
+    if remote_files_data is None and not get_new_remote_data:
+            remote_files_data = _load_remote_files_data(True)
     local_files_data = _load_local_version_data()
 
     total_size_of_updates = 0

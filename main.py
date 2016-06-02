@@ -26,6 +26,10 @@ if len(sys.argv) > 1:
             z.extractall(target_dir)
 
 config.load_config("config")
+path = None
+if "nwn_path" in config.main_conf_values:
+    path_finder.set_nwn_path(config.main_conf_values["nwn_path"])
+
 path = path_finder.get_nwn_path()
 
 

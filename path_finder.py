@@ -33,12 +33,14 @@ def get_nwn_path() -> str:
 
     return cached_path
 
-def set_nwn_path(path : str):
+def set_nwn_path(path : str) -> bool:
     if _verify_path(path) is False:
-        return
+        return False
 
     global cached_path
     cached_path = path
+
+    return True
 
 def get_server_config_path() -> str:
     return os.path.join("./config", config.current_server)

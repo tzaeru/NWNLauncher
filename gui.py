@@ -232,8 +232,13 @@ nwn_path_name_label.place(in_=mainframe,
 def _trigger_path_dialogue(e):
     path = askdirectory(title="Select NWN installation directory")
     if len(path) > 0:
-        nwn_path.set(path)
-        path_finder.set_nwn_path(path)
+        print("Setting path!")
+        if path_finder.set_nwn_path(path):
+            nwn_path.set(path)
+            _do_check_update()
+            config.serialize_to_main_conf(["nwn_path"], [path])
+        else:
+            print("False path: " + path)
 
 nwn_path_label.bind("<Button-1>",_trigger_path_dialogue)
 
