@@ -99,6 +99,8 @@ def _load_player_name() -> str:
     except:
         print("Couldn't open NWN config file.")
 
+    return " "
+
 def set_player_name(name: str):
     f = open(path_finder.get_nwnplayer_path(), 'r')
     lines = f.readlines()
