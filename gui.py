@@ -467,19 +467,22 @@ def _gog_popupmsg():
     button.pack()
 
 def _check_for_gog_cd_key():
-    with open(path_finder.get_cdkey_path()) as cdkey:
-        cd_keys = cdkey.read()
-        cd_keys = cd_keys.replace(" ", "")
-        key1_index = cd_keys.find("Key1")
-        key1_index = cd_keys.find("=", key1_index) + 1
-        key1 = cd_keys[key1_index:cd_keys.find("\n", key1_index)]
-        key1 = key1.replace("-", "")
-        public_key1 = ""
-        for i in range(0,8):
-            public_key1 += key1[1 + i*2]
-        print("Public key: " + public_key1)
-        if public_key1 == "Q7RREKF3":
-            _gog_popupmsg()
+    try:
+        with open(path_finder.get_cdkey_path()) as cdkey:
+            cd_keys = cdkey.read()
+            cd_keys = cd_keys.replace(" ", "")
+            key1_index = cd_keys.find("Key1")
+            key1_index = cd_keys.find("=", key1_index) + 1
+            key1 = cd_keys[key1_index:cd_keys.find("\n", key1_index)]
+            key1 = key1.replace("-", "")
+            public_key1 = ""
+            for i in range(0,8):
+                public_key1 += key1[1 + i*2]
+            print("Public key: " + public_key1)
+            if public_key1 == "Q7RREKF3":
+                _gog_popupmsg()
+    except:
+        print("Couldn't check GoG CD key!")
 
 if config.main_conf_values["show_gog_warning"]:
     root.after(50, _check_for_gog_cd_key)

@@ -14,6 +14,7 @@ STATUS_DOWNLOADED = "All files downloaded,\nprogressing hanging ones..."
 STATUS_UPDATED = "Files are up to date."
 STATUS_UPDATES_AVAILABLE = "Updates are available!"
 STATUS_DOWNLOADING = "Downloading file: "
+STATUS_NO_PATH = "Path to NWN not set."
 
 status = STATUS_CHECKING
 file_being_downloaded = None
