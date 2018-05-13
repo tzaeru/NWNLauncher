@@ -7,6 +7,10 @@ import dependency_manager
 import os, sys
 import platform
 import zipfile
+import version_checker
+
+#log_file = open("debug.log","w")
+#sys.stdout = log_file
 
 if len(os.path.dirname(sys.argv[0])) > 0:
     os.chdir(os.path.dirname(sys.argv[0]))
@@ -38,5 +42,8 @@ if path is not path_finder.NO_PATH:
     t.start()
 else:
     dependency_manager.status = dependency_manager.STATUS_NO_PATH
+
+version_thread = Thread(target=version_checker.get_available_version)
+version_thread.start()
 
 import gui

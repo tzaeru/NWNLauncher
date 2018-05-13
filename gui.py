@@ -12,8 +12,6 @@ from tkinter.filedialog import askdirectory
 
 import dependency_manager
 
-from threading import Thread
-
 import config
 from PIL import Image, ImageTk
 
@@ -22,8 +20,11 @@ import webbrowser
 import utilities
 import functools
 
+import version_checker
+
 gui_update_cycles = 0
 update_check_queued = False
+shown_update = False
 
 def _image_to_selected(event):
     if event.widget.enabled == True:
@@ -106,13 +107,18 @@ def _trigger_delete_overrides(e = None):
 root = Tk()
 root.title("NWN Launcher - Prisoners of The Mist")
 root.resizable(0,0)
+#root.iconify()
+#root.attributes('-alpha', 0.0) #For icon
+#main_window = Toplevel()
+#main_window.overrideredirect(False)
+#main_window.geometry("1000x1000") #Whatever size
 
 # Load the images we'll use
 background_image=ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), "background.png"))
 
 buttons = {}
 
-for button_name in ["clear", "launch", "update", "website"]:
+for button_name in ["clear", "launch", "update", "website", "gear"]:
     buttons[button_name + "_button_active"] = ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), button_name + "_button_active.png"))
     buttons[button_name + "_button_disabled"] = ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), button_name + "_button_disabled.png"))
     buttons[button_name + "_button_hovered"] = ImageTk.PhotoImage(file=os.path.join(path_finder.get_server_images_path(), button_name + "_button_hovered.png"))
@@ -138,11 +144,13 @@ for button_name in ["clear", "launch", "update", "website"]:
 ttk.Style().configure("TEntry", padding=6, relief="flat",
    background="#595b59")
 
+#mainframe = ttk.Frame(main_window, padding="0 0 0 0")
 mainframe = ttk.Frame(root, padding="0 0 0 0")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
 background_label = Label(mainframe, image=background_image, borderwidth=0, background="#000000")
 background_label.grid(row=0,column=0, rowspan=8, columnspan=8)
+background_label.bind("<Button-1>", lambda event: print("Pressed BG"))
 
 launch_button = _create_label_button("Launch", "launch")
 launch_button.place(in_=mainframe, anchor=config.get_gui_conf("launch_button_anchor"),
@@ -158,7 +166,9 @@ def _trigger_launch(e):
         subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
             " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())
     else:
-        subprocess.Popen(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
+        print("Exe dir path: " + path_finder.get_executable_dir_path())
+        print("Exe path: " + path_finder.get_executable_path())
+        subprocess.Popen(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_executable_dir_path())
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
@@ -175,7 +185,19 @@ def _change_player_conf(*args):
             config.setup_config_for(value["name_short"])
             break
 
-player_name_label = Label(text = "Player name: ", borderwidth = 0, width=0,
+diagnosis_button = _create_label_button("Gear", "gear")
+diagnosis_button.place(in_=mainframe, anchor=config.get_gui_conf("gear_button_anchor"),
+    relx=config.get_gui_conf("gear_button_pos")[0],
+    rely=config.get_gui_conf("gear_button_pos")[1])
+
+def _open_diagnosis(e):
+    subprocess.Popen("winmtr/WinMTR.exe " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
+
+diagnosis_button.bind("<Button-1>",_open_diagnosis)
+
+
+
+player_name_label = Label(mainframe, text = "Player name: ", borderwidth = 0, width=0,
         padx=2, pady=2,
         font=config.get_gui_conf("player_name_label_font", "label_default_font"),
         foreground=config.get_gui_conf("player_name_label_fg_color", "label_default_fg_color"),
@@ -200,7 +222,7 @@ def _save_player():
         config.main_conf_values["player_names"].append(player_var.get())
         config.serialize_to_main_conf(["player_names"], [config.main_conf_values["player_names"]])
 
-player_save_button = Label(text = "Save Name", borderwidth = 0, width=0,
+player_save_button = Label(mainframe, text = "Save Name", borderwidth = 0, width=0,
         padx=2, pady=2,
         font=config.get_gui_conf("save_button_font", "button_font"),
         foreground=config.get_gui_conf("save_button_fg_color", "button_enabled_fg_color"),
@@ -219,7 +241,7 @@ nwn_path_label.place(in_=mainframe,
     relx=config.get_gui_conf("nwn_path_label_pos")[0],
     rely=config.get_gui_conf("nwn_path_label_pos")[1])
 
-nwn_path_name_label = Label(text = "NWN Path:", borderwidth = 0, width=0,
+nwn_path_name_label = Label(mainframe, text = "NWN Path:", borderwidth = 0, width=0,
         padx=2, pady=2,
         font=config.get_gui_conf("nwn_path_name_label_font", "label_font"),
         foreground=config.get_gui_conf("nwn_path_name_label_fg_color", "label_fg_color"),
@@ -488,6 +510,33 @@ def _check_for_gog_cd_key():
                 _gog_popupmsg()
     except:
         print("Couldn't check GoG CD key!")
+
+def _check_for_upgrade():
+    if version_checker.is_update_available() == True and shown_update == False:
+        top = Toplevel()
+        top.title("New launcher version available!")
+
+        msg = ttk.Label(top, text="A new version of the launcher is available\n",
+            font=NORM_FONT)
+        msg.pack()
+
+        def download_launcher(e):
+            webbrowser.open("http://5.9.81.74:2020/NWN%20Launcher%20Installer.exe")
+
+        download_button = ttk.Button(top, text="Download Update")
+        download_button.bind("<Button-1>", download_launcher)
+        download_button.pack()
+
+        close_button = ttk.Button(top, text="Dismiss", command=top.destroy)
+        close_button.pack()
+
+        global shown_update
+        shown_update = True
+
+    if shown_update == False:
+        root.after(5000, _check_for_upgrade)
+
+root.after(50, _check_for_upgrade)
 
 if config.main_conf_values["show_gog_warning"]:
     root.after(50, _check_for_gog_cd_key)

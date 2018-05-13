@@ -20,6 +20,9 @@ launch_button_pos = [0.97, 0.97]
 update_button_anchor = "ne"
 update_button_pos = [0.97, 0.6]
 
+gear_button_anchor = "ne"
+gear_button_pos = [0.97, 0.1]
+
 website_button_anchor = "sw"
 website_button_pos = [0.03, 0.97]
 

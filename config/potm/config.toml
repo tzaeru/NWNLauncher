@@ -1,5 +1,5 @@
 name_short = "potm"
-name_full = "Ravenloft - Prisoners of The Mist"
 remote_data_file = "http://tzaeru.com:2020/files.toml"
-nwn_server_address = "104.155.20.124:5121"
 website = "http://www.nwnravenloft.com"
+name_full = "Ravenloft - Prisoners of The Mist"
+nwn_server_address = "46.4.59.55"

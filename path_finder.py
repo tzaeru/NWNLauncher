@@ -1,11 +1,12 @@
 import platform
 import os.path
 import config
-from winreg import *
+import winreg
 
 NO_PATH = "Neverwinter Nights directory could not be resolved. Please set it manually."
 
 cached_path = NO_PATH
+cached_exe_dir_path = NO_PATH
 
 paths_for_windows = [
     "C:/NWN",
@@ -49,10 +50,22 @@ def get_server_images_path() -> str:
     return os.path.join("./config", config.current_server, "images")
 
 def get_executable_path() -> str:
+    global cached_exe_dir_path
+
     if platform.system() == "Windows":
-        return os.path.join(get_nwn_path(), "nwmain.exe")
+        if cached_exe_dir_path == NO_PATH:
+            cached_exe_dir_path = _find_executable_dir()
+        return cached_exe_dir_path + "nwmain.exe"
     else:
         return os.path.join(get_nwn_path(), "nwmain")
+
+def get_executable_dir_path() -> str:
+    global cached_exe_dir_path
+
+    if platform.system() == "Windows":
+        if cached_exe_dir_path == NO_PATH:
+            cached_exe_dir_path = _find_executable_dir()
+        return cached_exe_dir_path
 
 def get_config_path() -> str:
     return "./config";
@@ -112,15 +125,30 @@ def _verify_path(path : str) -> bool:
         return os.path.isfile(os.path.join(path, "nwmain"))
 
 def _find_from_win32_registry() -> str:
-    registry = ConnectRegistry(None,HKEY_LOCAL_MACHINE)
+    registry = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
 
     for key_string in keys_for_windows:
         try:
-            key = OpenKey(registry, key_string)
+            key = winreg.OpenKey(registry, key_string)
             print("Found key: ", key_string)
-            path_val = QueryValueEx(key, "Location")
+            path_val = winreg.QueryValueEx(key, "Location")
             return path_val[0]
         except EnvironmentError:
             print("Key not found: ", key_string)
 
+    return NO_PATH
+
+def _find_executable_dir() -> str:
+    registry = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
+    try:
+        # "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 704450"
+        # key = OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Steam App 704450", access=winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
+        key = winreg.OpenKey(registry, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Steam App 704450", access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+        print("Opened key")
+        path = winreg.QueryValueEx(key, "InstallLocation")[0] + "\\bin\\win32\\"
+        print("PATH:" + path)
+        return path
+    except Exception as e:
+        print("Key not found for executable, " + str(e))
+    
     return NO_PATH

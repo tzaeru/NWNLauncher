@@ -13,6 +13,7 @@ main_conf_values = {}
 confs = {}
 gui_confs = {}
 player_name = ""
+launcher_version_address = "http://5.9.81.74:2020/version"
 
 def load_config(path):
     global confs, gui_confs
@@ -87,6 +88,21 @@ def serialize_to_main_conf(keys : list, values : list):
     if config is not None:
         f = open(os.path.join(config_path, "main_config.toml"),'w')
         f.write(toml.dumps(config))
+        f.flush()
+        f.close()
+
+def serialize_to_current_server_conf(keys: list, values: list):
+    server_config = None
+    print("Setting keys: ", keys, " to values: ", values)
+    with open(os.path.join(config_path, current_server, "config.toml")) as conffile:
+        server_config = toml.load(conffile)
+
+    for i in range(0, len(keys)):
+        server_config[keys[i]] = values[i]
+
+    if server_config is not None:
+        f = open(os.path.join(config_path, current_server, "config.toml"),'w')
+        f.write(toml.dumps(server_config))
         f.flush()
         f.close()
 

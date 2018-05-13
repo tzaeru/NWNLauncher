@@ -39,11 +39,12 @@ def start_check(get_new_remote_data = False):
 
     status = STATUS_CHECKING
 
-
     remote_files_data = _load_remote_files_data(get_new_remote_data)
     if remote_files_data is None and not get_new_remote_data:
             remote_files_data = _load_remote_files_data(True)
     local_files_data = _load_local_version_data()
+
+    _serialize_server_address(remote_files_data)
 
     total_size_of_updates = 0
     total_amount_of_updates = 0
@@ -143,7 +144,9 @@ def _downloaded_file_handler_thread():
         _validate_target_dir(entry)
         _move_entry(entry)
         _update_entry_to_local_data(entry, local_files_data)
-        _update_checksum_entry(entry, local_checksum_data)
+
+        if entry["target_dir"] != "portraits":
+            _update_checksum_entry(entry, local_checksum_data)
 
         entries_to_process.task_done()
 
@@ -208,10 +211,10 @@ def _update_checksum_entry(entry, local_checksum_data):
     else:
         return
 
-    print ("Checksum: ", checksum)
+    # print ("Checksum: ", checksum)
 
     modified_at = time.ctime(os.path.getmtime(file_path))
-    print ("Modified at: ", modified_at)
+    # print ("Modified at: ", modified_at)
 
     checksum_entry = {}
     checksum_entry["name"] = entry["name"]
@@ -290,7 +293,7 @@ def _fetch_entry(entry):
     if url[0] == '~':
         url = config.remote_data_file[:config.remote_data_file.rfind('/')+1] + url[1:]
 
-    print (url)
+    # print (url)
 
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
@@ -355,7 +358,7 @@ def _chunk_report(bytes_so_far, chunk_size, total_size):
     current_file_progress = float(bytes_so_far) / total_size
 
 def _chunk_read(response, file_to_write_to, chunk_size=2**20, report_hook=None):
-    print(response.info())
+    #print(response.info())
     total_size = response.info().get('Content-Length')
     if (total_size):
         total_size = total_size.strip()
@@ -382,3 +385,11 @@ def _chunk_read(response, file_to_write_to, chunk_size=2**20, report_hook=None):
           report_hook(bytes_so_far, chunk_size, total_size)
     
     return bytes_so_far
+
+def _serialize_server_address(remote_files_data):
+    print(config.nwn_server_address)
+    print(remote_files_data["server_ip"])
+    if config.nwn_server_address != remote_files_data["server_ip"]:
+        print("Received server address not matching locally configured address..")
+        config.nwn_server_address = remote_files_data["server_ip"]
+        config.serialize_to_current_server_conf(["nwn_server_address"], [remote_files_data["server_ip"]])
