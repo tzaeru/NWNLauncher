@@ -1,10 +1,10 @@
-download_music = 1
-show_hosts_file_popupmsg = true
 download_portraits = 1
+download_music = 1
+default_server = "potm"
+download_overrides = 1
 show_gog_warning = true
+login_as_dm = 0
 player_names = []
 current_player = ""
 allow_overwrite = 1
-default_server = "potm"
-login_as_dm = 0
-download_overrides = 1
+show_hosts_file_popupmsg = true

@@ -163,12 +163,15 @@ def _trigger_launch(e):
     utilities.backup_logs()
 
     if dm_var.get():
-        subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
-            " +password " + dm_pass_var.get(), cwd=path_finder.get_nwn_path())
+        # CHANGE BACK ONCE EE FIXED?
+        # subprocess.Popen(path_finder.get_executable_path() + " -dmc +connect " + config.nwn_server_address +
+        #    " +password " + dm_pass_var.get(), cwd=path_finder.get_executable_dir_path())
+        subprocess.Popen(path_finder.get_executable_path(), cwd=path_finder.get_executable_dir_path())
     else:
-        print("Exe dir path: " + path_finder.get_executable_dir_path())
-        print("Exe path: " + path_finder.get_executable_path())
-        subprocess.Popen(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_executable_dir_path())
+        print("NWN address: " + config.nwn_server_address)
+        # CHANGE BACK ONCE EE FIXED?
+        # subprocess.Popen(path_finder.get_executable_path() + " +connect " + config.nwn_server_address, cwd=path_finder.get_executable_dir_path())
+        subprocess.Popen(path_finder.get_executable_path(), cwd=path_finder.get_executable_dir_path())
 
 launch_button.bind("<Button-1>",_trigger_launch)
 
@@ -191,7 +194,7 @@ diagnosis_button.place(in_=mainframe, anchor=config.get_gui_conf("gear_button_an
     rely=config.get_gui_conf("gear_button_pos")[1])
 
 def _open_diagnosis(e):
-    subprocess.Popen("winmtr/WinMTR.exe " + config.nwn_server_address, cwd=path_finder.get_nwn_path())
+    subprocess.Popen("winmtr/WinMTR.exe " + config.nwn_server_address, cwd=path_finder.get_executable_path())
 
 diagnosis_button.bind("<Button-1>",_open_diagnosis)
 
@@ -234,7 +237,7 @@ player_save_button.place(in_=mainframe,
 player_save_button.bind("<Button-1>",lambda e:_save_player())
 
 nwn_path = StringVar()
-nwn_path.set(path_finder.get_nwn_path())
+nwn_path.set(path_finder.get_executable_path())
 nwn_path_label = _create_label(nwn_path)
 nwn_path_label.place(in_=mainframe,
     anchor=config.get_gui_conf("nwn_path_label_anchor"),

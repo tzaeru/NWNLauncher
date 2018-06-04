@@ -156,13 +156,13 @@ def _downloaded_file_handler_thread():
     return 1
 
 def _validate_target_dir(entry):
-    target_dir = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
+    target_dir = path_finder.get_nwn_path(entry["target_dir"])
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
 def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
-    file_path = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
+    file_path = path_finder.get_nwn_path(entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     # Bail out early if the file doesn't even exist!
@@ -173,8 +173,8 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
     if config.main_conf_values["allow_overwrite"] == 0:
         return True
 
-    # And if the file exists and is a portrait, return right away without checksum checking
-    if entry["target_dir"] == "portraits":
+    # And if the file exists and is a portrait or override, return right away without checksum checking
+    if entry["target_dir"] == "portraits" or entry["target_dir"] == "override":
         return True
 
     local_entry = None
@@ -200,7 +200,7 @@ def _find_entry_checksum_match(entry, local_checksum_data) -> bool:
 
 def _update_checksum_entry(entry, local_checksum_data):
     
-    file_path = os.path.join(path_finder.get_nwn_path(), entry["target_dir"])
+    file_path = path_finder.get_nwn_path(entry["target_dir"])
     file_path = os.path.join(file_path, entry["name"])
 
     print("Doing checksum for: ", entry["name"])
@@ -268,7 +268,7 @@ def _move_entry(entry):
 
     src_path = os.path.join("tmp", entry["src_file"])
 
-    dst_path = os.path.join(path_finder.get_nwn_path(), target_dir)
+    dst_path = path_finder.get_nwn_path(target_dir)
     dst_path = os.path.join(dst_path, entry["target_file"])
 
     filename, file_extension = os.path.splitext(src_path)
@@ -283,7 +283,7 @@ def _move_entry(entry):
     else:
         print("Unballing ", src_path, "...")
         tar = tarfile.open(src_path)
-        tar.extractall(os.path.join(path_finder.get_nwn_path(), target_dir))
+        tar.extractall(path_finder.get_nwn_path(target_dir))
         tar.close()
         os.remove(src_path)
 

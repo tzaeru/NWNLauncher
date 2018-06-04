@@ -2,44 +2,33 @@ import platform
 import os.path
 import config
 import winreg
+import os
 
 NO_PATH = "Neverwinter Nights directory could not be resolved. Please set it manually."
 
-cached_path = NO_PATH
+cached_nwn_ini = ""
 cached_exe_dir_path = NO_PATH
 
-paths_for_windows = [
-    "C:/NWN",
-    "C:/NWN/NeverwinterNights",
-    "C:/NeverwinterNights/",
-    "C:/NeverwinterNights/NWN",
-    "C:/Program Files/NWN",
-    "C:/Program Files/NeverwinterNights",
-    "C:/Program Files(x86)/NWN",
-    "C:/Program Files(x86)/NeverwinterNights",
-    "C:/Games/NWN",
-    "C:/Games/NeverwinterNights",
-    "C:/Program Files (x86)/GOG.com/Neverwinter Nights Diamond Edition/",
-]
+# Use subpath for accessing hak, override, etc, directories. Set null to access the root NWN directory.
+def get_nwn_path(subpath="") -> str:
+    global cached_nwn_ini
 
-keys_for_windows = [
-    r"SOFTWARE\BioWare\NWN\Neverwinter",
-]
+    # Open nwn.ini to memory
+    if cached_nwn_ini == "":
+        print("INI path: " + _find_ini_file())
+        with open(_find_ini_file(), 'r') as myfile:
+            cached_nwn_ini=myfile.read()
 
-def get_nwn_path() -> str:
-    global cached_path
+    if (len(subpath) > 0):
+        for line in cached_nwn_ini.splitlines():
+            if line.startswith(subpath.upper()):
+                return line[line.find('=')+1:]
 
-    if cached_path == NO_PATH:
-        cached_path = _resolve_path()
-
-    return cached_path
+    return os.environ['USERPROFILE'] + "\\Documents\\Neverwinter Nights"
 
 def set_nwn_path(path : str) -> bool:
-    if _verify_path(path) is False:
-        return False
-
-    global cached_path
-    cached_path = path
+    global cached_exe_dir_path
+    cached_exe_dir_path = path
 
     return True
 
@@ -81,7 +70,7 @@ def get_local_checksums_path() -> str:
     return os.path.join("./config", "file_info", config.local_checksums_file)
 
 def get_cdkey_path() -> str:
-    return os.path.join(get_nwn_path(), "nwncdkey.ini")
+    return os.path.join(get_nwn_path(), "cdkey.ini")
 
 def get_nwnplayer_path() -> str:
     return os.path.join(get_nwn_path(), "nwnplayer.ini") 
@@ -95,60 +84,18 @@ def get_logs_path() -> str:
     else:
         return None
 
-def _resolve_path() -> str:
-    if platform.system() == "Windows":
-        return _resolve_path_win32()
-    else:
-        print ("Automatic path resolvement for non-Windows systems isn't supported yet.")
-        return NO_PATH
-
-def _resolve_path_win32() -> str:
-    resolved_path = NO_PATH
-
-    resolved_path = _find_from_win32_registry()
-    print(resolved_path)
-
-    if resolved_path is not NO_PATH and _verify_path(resolved_path) is True:
-        return resolved_path
-
-    for path in paths_for_windows:
-        if _verify_path(path):
-            print("Found path, it is: ", path)
-            return path
-
-    return NO_PATH
-
-def _verify_path(path : str) -> bool:
-    if platform.system() == "Windows":
-        return os.path.isfile(os.path.join(path, "nwmain.exe"))
-    else:
-        return os.path.isfile(os.path.join(path, "nwmain"))
-
-def _find_from_win32_registry() -> str:
-    registry = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
-
-    for key_string in keys_for_windows:
-        try:
-            key = winreg.OpenKey(registry, key_string)
-            print("Found key: ", key_string)
-            path_val = winreg.QueryValueEx(key, "Location")
-            return path_val[0]
-        except EnvironmentError:
-            print("Key not found: ", key_string)
-
-    return NO_PATH
-
 def _find_executable_dir() -> str:
     registry = winreg.ConnectRegistry(None,winreg.HKEY_LOCAL_MACHINE)
     try:
         # "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 704450"
         # key = OpenKey(winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Steam App 704450", access=winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
         key = winreg.OpenKey(registry, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Steam App 704450", access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
-        print("Opened key")
         path = winreg.QueryValueEx(key, "InstallLocation")[0] + "\\bin\\win32\\"
-        print("PATH:" + path)
         return path
     except Exception as e:
         print("Key not found for executable, " + str(e))
     
     return NO_PATH
+
+def _find_ini_file() -> str:
+    return os.environ['USERPROFILE'] + "\\Documents\\Neverwinter Nights\\nwn.ini"
